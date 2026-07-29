@@ -16,7 +16,7 @@
 
 - ORM
 - Relational Database
-- html, css, jinja2, flask, python
+- HTML, CSS, Jinja2, Flask, Python
 
 ----
 
@@ -36,7 +36,7 @@
 
 ## Skills:
 
-#### SQLite relational db file
+### SQLite relational db
 
 ### Flask-AQLAlchemy
 - __tablename__ is assumed with flasksqlalchemy extension within the model
@@ -46,7 +46,7 @@
 - db_column_model
 - imperative mapping and declarative mapping
 
-#### Flask:
+### Flask:
 - render_template
 - url_for:
   - send-subbmit the html form. not just leave it in the browser user-agent as a post request
@@ -87,49 +87,45 @@
 ### custom error pages in flask
 
 ### HTML:
-    - the same name of the form attribute should be used with sqlalchemy when creating the model object instance
-    - within the form the required attribute does not affect the nullable=false within the sqlalchemy model
+- the same name of the form attribute should be used with sqlalchemy when creating the model object instance
+- within the form the required attribute does not affect the nullable=false within the sqlalchemy model
 
-# http:
-    - 302 found request post, 200, 304
-    - cache
-    - GET, POST
-    - URI
+### http:
+- 302 found request post, 200, 304
+- cache
+- GET, POST
+- URI
 
-# how to use sqlite3 CLI:
-    - sqlite3 db_file.db
-    - .tables
-    - select * from table_name;
-    - .schema table_name;
-    - PRAGMA table_info(projects);
+### how to use sqlite3 CLI:
+- sqlite3 db_file.db
+- .tables
+- select * from table_name;
+- .schema table_name;
+- PRAGMA table_info(projects);
     
-    # update sqlitedb with or without transactions
-    - UPDATE project
-    - SET id = '2'
-    - WHERE id = 1;
+### update sqlitedb with or without transactions
+- UPDATE project
+- SET id = '2'
+- WHERE id = 1;
 
+### safer to do a transaction directly sqlite3 in db form cli
+BEGIN;
 
-    # safer to do a transaction directly sqlite3 in db form cli
-    BEGIN;
+UPDATE projects
+SET github_repo = 'https://github.com/gutiluis/Techdegree-project-5'
+WHERE id = 1;
+### check
+SELECT id, github_repo FROM projects WHERE id = 1;
+COMMIT;
 
-    UPDATE projects
-    SET github_repo = 'https://github.com/gutiluis/Techdegree-project-5'
-    WHERE id = 1;
-    # check
-    SELECT id, github_repo FROM projects WHERE id = 1;
-
-    COMMIT;
-
-
-    # use not null to force the column always have input
+### use not null to force the column always have input
 
 ### aplying an href to an anchor changes the font. the goal is using an url_for flask route
-
 
 ### difference between string parse time and string parse format time
 model needs a datetime object. strptime
 
-### get appearse in the browser. post doesnt
+### use get appears in the browser. post doesnt
 
 ### using strftime within jinja template to display only year and month
 
@@ -149,11 +145,9 @@ The form parameters. By default an ImmutableMultiDict is returned from this func
 
 ### get_or_404(ident(Any), description=None)
 Like get() but aborts with a 404 Not Found error instead of returning None.
-
-
-
 https://flask.palletsprojects.com/en/2.2.x/errorhandling/?highlight=error%20page#custom-error-pages
------
+
+---
 
 ##
 clone:
