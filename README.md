@@ -8,9 +8,7 @@
 - pip install -r requirements
 - python3 app.py
 
-
-
------
+---
 
 ## Features:
 
@@ -68,7 +66,7 @@
 
 #### Automatic autoescaping in jinja templates
 
-#### Bootstrap:
+### Bootstrap:
 - css framework with optional javascript
 - <link> tag inside the head for css
 - <scrip></script> tag for javascript
@@ -84,19 +82,17 @@
 - keyframes
 - mediaqueries
 
-### custom error pages in flask
-
 ### HTML:
-- the same name of the form attribute should be used with sqlalchemy when creating the model object instance
-- within the form the required attribute does not affect the nullable=false within the sqlalchemy model
+- The same name of the form attribute should be used with sqlalchemy when creating the model object instance
+- Within the form the required attribute does not affect the nullable=false within the sqlalchemy model
 
-### http:
+### HTTP methods:
 - 302 found request post, 200, 304
-- cache
+- Cache
 - GET, POST
 - URI
 
-### how to use sqlite3 CLI:
+### How to use sqlite3 CLI:
 - sqlite3 db_file.db
 - .tables
 - select * from table_name;
@@ -118,27 +114,29 @@ WHERE id = 1;
 SELECT id, github_repo FROM projects WHERE id = 1;
 COMMIT;
 
-### use not null to force the column always have input
+### Use not null to force the column always have input
 
-### aplying an href to an anchor changes the font. the goal is using an url_for flask route
+### Applying an href to an anchor changes the font. the goal is using an url_for flask route
 
-### difference between string parse time and string parse format time
+### Difference between string parse time and string parse format time
 model needs a datetime object. strptime
 
-### use get appears in the browser. post doesnt
+### Get appears in the browser. post doesnt
 
-### using strftime within jinja template to display only year and month
+### Using strftime within JINJA2 template to display only year and month
 
 
-### value does not work with jinja from the form in textarea tags
+### Value does not work with jinja from the form in textarea tags
 In HTML, the initial content of a <textarea> is specified between its opening and closing tags, not as a value attribute.
 
-### flask error handling not for normal control flow
-### not to replace validation
-### not to hide bugs permanently
-### error handling in flask is for exceptions
+### Flask error handling not for normal control flow
+### Not to replace validation
+### Not to hide bugs permanently
+### Error handling in flask is for exceptions
 
-### request in flask
+### Custom error pages in flask
+
+### Request in flask:
 class flask.Request(environ, populate_request=True, shallow=False)¶
 property form: ImmutableMultiDict[str, str]
 The form parameters. By default an ImmutableMultiDict is returned from this function. This can be changed by setting parameter_storage_class to a different type. This might be necessary if the order of the form data is important.
