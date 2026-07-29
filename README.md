@@ -99,18 +99,18 @@
 - .schema table_name;
 - PRAGMA table_info(projects);
     
-### update sqlitedb with or without transactions
+### Update sqlitedb with or without transactions
 - UPDATE project
 - SET id = '2'
 - WHERE id = 1;
 
-### safer to do a transaction directly sqlite3 in db form cli
+### Safer to do a transaction directly sqlite3 in db from CLI
 BEGIN;
 
 UPDATE projects
 SET github_repo = 'https://github.com/gutiluis/Techdegree-project-5'
 WHERE id = 1;
-### check
+### Check
 SELECT id, github_repo FROM projects WHERE id = 1;
 COMMIT;
 
