@@ -1,16 +1,19 @@
-# Portfolio with SQLAlchemy
+# Portfolio with SQLAlchemy and Flask
 
 ---
 
-## How it works:
+## How it works
+
+```
 - python3 -m venv venv
 - source venv/bin/activate
 - pip install -r requirements
 - python3 app.py
+```
 
 ---
 
-## Features:
+## Features
 
 - ORM
 - Relational Database
@@ -18,7 +21,7 @@
 
 ----
 
-## Tech-Stack:
+## Tech-Stack
 
 - Python
 - Flask
@@ -32,19 +35,22 @@
 
 ---
 
-## Skills:
+## Skills
 
 ### SQLite relational db
 
 ### Flask-AQLAlchemy
+
 - __tablename__ is assumed with flasksqlalchemy extension within the model
 - flask sqlalchemy manages a session per request. open, add, commit or rollback, and session closed()
 
 ### SQLAlchemy
+
 - db_column_model
 - imperative mapping and declarative mapping
 
-### Flask:
+### Flask
+
 - render_template
 - url_for:
   - send-subbmit the html form. not just leave it in the browser user-agent as a post request
@@ -55,7 +61,8 @@
   -access incoming request data after using url_for and GET and POST methods
 - app context(). create_all()
 
-### JINJA2:
+### JINJA2
+
 - for loops
 - blocks
 - the child file does not have body, or head html tags
@@ -66,7 +73,8 @@
 
 #### Automatic autoescaping in jinja templates
 
-### Bootstrap:
+### Bootstrap
+
 - css framework with optional javascript
 - <link> tag inside the head for css
 - <scrip></script> tag for javascript
@@ -78,21 +86,25 @@
 - removed crossorigin and integrity hash
 
 ### CSS
+
 - At-rules
 - keyframes
 - mediaqueries
 
-### HTML:
+### HTML
+
 - The same name of the form attribute should be used with sqlalchemy when creating the model object instance
 - Within the form the required attribute does not affect the nullable=false within the sqlalchemy model
 
-### HTTP methods:
+### HTTP methods
+
 - 302 found request post, 200, 304
 - Cache
 - GET, POST
 - URI
 
-### How to use sqlite3 CLI:
+### How to use sqlite3 CLI
+
 - sqlite3 db_file.db
 - .tables
 - select * from table_name;
