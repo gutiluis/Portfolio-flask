@@ -5,10 +5,10 @@
 ## How it works
 
 ```
-- python3 -m venv venv
-- source venv/bin/activate
-- pip install -r requirements
-- python3 app.py
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements
+python3 app.py
 ```
 
 ---
