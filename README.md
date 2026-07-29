@@ -80,9 +80,9 @@
 - removed crossorigin and integrity hash
 
 ### CSS
-    - At-rules
-        - keyframes
-        - mediaqueries
+- At-rules
+- keyframes
+- mediaqueries
 
 ### custom error pages in flask
 
