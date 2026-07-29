@@ -1,6 +1,4 @@
-# Portfolio with SQLAlchemy and Flask
-
----
+# Portfolio Web APP with SQLAlchemy and Flask
 
 ## How it works
 
@@ -164,3 +162,9 @@ clone:
 ```bash
 git clone https://github.com/gutiluis/Techdegree-project-5.git
 ```
+
+---
+
+### License
+
+[MIT LICENSE](LICENSE)
