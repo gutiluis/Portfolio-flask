@@ -28,27 +28,19 @@ python3 app.py
 
 ----
 
-## Tech-Stack
-
 <table align="center">
   <tr>
-    <th colspan="3" align="center"><h3>Tech Stack</h3></th>
+    <th colspan="3" align="center"><h3>Tech-Stack</h3></th>
   </tr>
   <tr>
     <td align="center">
-      ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)<br>
-      ![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)<br>
-      ![Jinja](https://img.shields.io/badge/Jinja-B41717?style=for-the-badge&logo=jinja&logoColor=white)
+      <h5>Python</h5>
     </td>
     <td align="center">
-      ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-D71F00?style=for-the-badge&logo=sqlalchemy&logoColor=white)<br>
-      ![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)<br>
-      ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+      <h5>Flask</h5>
     </td>
     <td align="center">
-      ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)<br>
-      ![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)<br>
-      ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+      <h5>SQLAlchemy</h5>
     </td>
   </tr>
 </table>
