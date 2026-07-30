@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+
+# file: models.py
+# descr: main model class mapper
+
 """Database models in sqlalchemy for the flask app."""
 import datetime
 from flask import Flask
