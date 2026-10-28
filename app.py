@@ -1,10 +1,21 @@
 """Flask application with relational db creation for the portfolio site. The app is importing a model."""
 from datetime import datetime
-from flask import render_template, url_for, request, redirect
+from flask import render_template, url_for, request, redirect, abort
+from flask_login import login_required, current_user
+from functools import wraps
 from flask_migrate import Migrate
 from models import db, Project, app
 
 migrate = Migrate(app, db)
+
+
+def owner_required(view):
+    @wraps(view)
+    def wrapped_view(*args, **kwargs):
+        if not current_user.is_owner:
+            abort(403)
+        return view(*args, **kwargs)
+    return wrapped_view
 
 
 @app.route('/')
@@ -15,6 +26,8 @@ def index():
 
 
 @app.route('/projects/new', methods=["GET", "POST"])
+@login_required
+@owner_required
 def add_project():
     """Render new project form html."""
     if request.method == "POST":
@@ -28,7 +41,7 @@ def add_project():
             title=request.form.get('title'),
             created=convert_string,
             description=request.form.get('desc'),
-            skills=request.form.get('skills'),
+            technologies=request.form.get('technologies'),
             github_repo=request.form.get('github'))
 
         db.session.add(new_project)
@@ -56,7 +69,7 @@ def project_edit(project_id):
         project.title = request.form.get('title')
         project.created = convert_string
         project.description = request.form.get('desc')
-        project.skills = request.form.get('skills')
+        project.technologies = request.form.get('technologies')
         project.github_repo = request.form.get('github')
         db.session.commit()
         return redirect(url_for('index'))
