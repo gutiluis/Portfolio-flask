@@ -1,5 +1,4 @@
 # file: models.py
-# descr: main model class mapper
 
 """SQLAlchemy ORM models"""
 import datetime

@@ -1,12 +1,25 @@
-"""Flask application with relational db creation for the portfolio site. The app is importing a model."""
+# file: app.py
+"""Flask with relational db creation for the portfolio site. The app is importing a model."""
 from datetime import datetime
 from flask import render_template, url_for, request, redirect, abort
-from flask_login import login_required, current_user
+from flask_login import login_required, current_user, login_user, logout_user, LoginManager
 from functools import wraps
 from flask_migrate import Migrate
-from models import db, Project, app
+from models import db, Project, app, User
+import os
+
+app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
+
 
 migrate = Migrate(app, db)
+
+login_manager = LoginManager()
+login_manager.login_view = 'login'
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+    return db.session.get(User, int(user_id))
 
 
 def owner_required(view):
@@ -17,6 +30,35 @@ def owner_required(view):
         return view(*args, **kwargs)
     return wrapped_view
 
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+
+    if request.method == 'POST':
+        username = request.form.get('username', '').strip()
+        password = request.form.get('password', '')
+
+        user = User.query.filter_by(username=username).first()
+
+        if user and user.is_owner and user.check_password(password):
+            login_user(user)
+            return redirect(url_for('index'))
+
+        return render_template(
+            'login.html',
+            error='Invalid username or password.',
+        ), 401
+
+    return render_template('login.html')
+
+
+@app.route('/logout', methods=['POST'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 @app.route('/')
 def index():
@@ -58,6 +100,8 @@ def project_detail(project_id):
 
 
 @app.route('/projects/<int:project_id>/edit', methods=["GET", "POST"])
+@login_required
+@owner_required
 def project_edit(project_id):
     """Render edition page with same conventions from add project."""
     project = Project.query.get_or_404(project_id)
@@ -76,7 +120,9 @@ def project_edit(project_id):
     return render_template('editform.html', project=project)
 
 
-@app.route('/projects/<int:project_id>/delete')
+@app.route('/projects/<int:project_id>/delete', methods=['POST'])
+@login_required
+@owner_required
 def project_delete(project_id):
     """Delete project from db and redirect to home."""
     project = Project.query.get_or_404(project_id)
