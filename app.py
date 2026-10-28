@@ -1,7 +1,10 @@
 """Flask application with relational db creation for the portfolio site. The app is importing a model."""
 from datetime import datetime
 from flask import render_template, url_for, request, redirect
+from flask_migrate import Migrate
 from models import db, Project, app
+
+migrate = Migrate(app, db)
 
 
 @app.route('/')
@@ -81,7 +84,3 @@ def not_found(error):
     return render_template('404.html', msg=error), 404
 
 
-if __name__ == "__main__":
-    with app.app_context():  # proxy
-        db.create_all()
-    app.run(debug=True, port=9000, host='127.0.0.1')
