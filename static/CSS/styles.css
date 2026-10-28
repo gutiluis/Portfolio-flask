@@ -195,27 +195,27 @@ About
 Skills
 *******/
 
-#skills {
+#technologies {
     margin-top: 7rem;
     text-align: center;
 }
 
-#skills .fas {
+#technologies .fas {
     color: var(--accent);
     font-size: 34px;
     margin-bottom: 2rem;
 }
 
-#skills h2 {
+#technologies h2 {
     margin-bottom: 3rem;
 }
 
-#skills ul {
+#technologies ul {
     padding: 0%;
     margin-bottom: 6rem;
 }
 
-#skills li {
+#technologies li {
     list-style-type: none;
     line-height: 50px;
 }
