@@ -135,7 +135,8 @@ def project_delete(project_id):
 @app.route('/about')
 def about():
     """Render about page."""
-    return render_template('about.html')
+    projects = Project.query.all()
+    return render_template('about.html', projects=projects)
 
 
 @app.errorhandler(404)
