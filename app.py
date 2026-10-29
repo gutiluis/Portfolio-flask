@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # file: app.py
 """Flask with relational db creation for the portfolio site. The app is importing a model."""
 from datetime import datetime

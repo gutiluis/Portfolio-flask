@@ -12,9 +12,9 @@
             <input type="month" name="date" id="date" placeholder="YYYY-MM" value="{{ project.created.strftime('%Y-%m') }}" required>
             <label for="description">Description</label>
             <textarea name="desc" id="description" cols="30" rows="20" placeholder="Description" required>{{ project.description }}</textarea>
-            <label for="skills-list" id="skills-label">Skills</label>
-            <p>Separate each skill by a comma</p>
-            <textarea name="skills" id="skills-list" cols="30" rows="10" placeholder="Skill, Skill" required>{{ project.skills }}</textarea>
+            <label for="technologies-list" id="technologies-label">Skills</label>
+            <p>Separate each technology by a comma</p>
+            <textarea name="technologies" id="technologies-list" cols="30" rows="10" placeholder="Technology, Technology" required>{{ project.technologies }}</textarea>
             <label for="github">GitHub Link</label>
             <input type="url" name="github" id="github" placeholder="Link to the repo" value="{{ project.github_repo }}" required>
             <div>
