@@ -59,6 +59,11 @@
                     </ul>
                   </div>
                 </div>
+                {% if current_user.is_authenticated and current_user.is_owner %}
+                    <form action="{{ url_for('logout') }}" method="POST">
+                        <button type="submit">Logout</button>
+                    </form>
+                {% endif %}
             </nav>
         </section>
         {% block content %}

@@ -11,6 +11,7 @@
         {% endif %}
 
         <form action="{{ url_for('login') }}" method="POST">
+
             <label for="username">Username</label>
             <input
                 type="text"
@@ -31,5 +32,6 @@
 
             <button type="submit">Log In</button>
         </form>
+        {% endif %}
     </section>
 {% endblock %}
