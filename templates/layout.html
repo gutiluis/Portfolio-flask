@@ -51,17 +51,13 @@
                           <a class="nav-link" href="#contact">Contact</a>
                         {% endblock %}
                       </li>
+                      {% if current_user.is_authenticated and current_user.is_owner %}
                       <li class="nav-item">
                       <!-- test if a variable is defined, not empty and not false with if statement. -->
-                      {% if current_user.is_authenticated and current_user.is_owner %}
                           <a class="nav-link" href="{{ url_for('add_project') }}">Add Project</a>
+                      </li>
                       {% endif %}
-                      </li>
-                      {% if not current_user.is_authenticated %}
-                      <li class="nav-item">
-                          <a class="nav-link" href="{{ url_for('login') }}">Login</a>
-                      </li>
-                      {% elif current_user.is_owner %}
+                      {% if current_user.is_authenticated and current_user.is_owner %}
                       <li class="nav-item">
                           <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
                       </li>
