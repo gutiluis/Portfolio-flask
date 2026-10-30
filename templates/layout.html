@@ -25,12 +25,11 @@
                         <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}">Home</a>
                       </li>
                       <li class="nav-item">
-                        {% block button %}
-                          <a class="nav-link" href="#about">About</a>
-                        {% endblock %}
+                          <a class="nav-link" href="{{ url_for('about') }}">About
+                          </a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#technologies">Technologies</a>
+                          <a class="nav-link" href="{{ url_for('technologies') }}">Technologies</a>
                       </li>
                       <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -47,9 +46,7 @@
                         </ul>
                       </li>
                       <li class="nav-item">
-                        {% block contact %}
                           <a class="nav-link" href="{{ url_for('index') }}#contact">Contact</a>
-                        {% endblock %}
                       </li>
                       {% if current_user.is_authenticated and current_user.is_owner %}
                       <li class="nav-item">

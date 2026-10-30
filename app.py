@@ -134,10 +134,14 @@ def project_delete(project_id):
 
 @app.route('/about')
 def about():
-    """Render about page."""
+    """About page."""
     projects = Project.query.all()
     return render_template('about.html', projects=projects)
 
+@app.route('/technologies')
+def technologies():
+    """Tech-Stack"""
+    return render_template('technologies.html')
 
 @app.errorhandler(404)
 def not_found(error):
