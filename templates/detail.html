@@ -1,15 +1,8 @@
 {% extends 'layout.html' %}
 
 
-{% block button %}
-    <a class="nav-link" href="{{ url_for('about') }}">About</a>
-{% endblock %}
-{% block contact %}
-    <a class="nav-link" href="mailto:gutierrez.luis@icloud.com">Contact</a>
-{% endblock %}
-
 {% block content %}
-    <section class="header">
+    <section class="header-detail">
         <h1>{{ project.title }}</h1>
         <p>{{ project.created.strftime('%Y-%m') }}</p>
         <a href="{{ project.github_repo }}" class="github-btn">
@@ -22,7 +15,7 @@
             </div>
         </ul>
     </section>
-    <section id="project-desc">
+    <section id="project-desc" class="body-detail">
         <div id="triangle5"></div>
         <h2>Description</h2>
         <p>
