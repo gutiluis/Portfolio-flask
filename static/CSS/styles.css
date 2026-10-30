@@ -466,8 +466,8 @@ Form
     margin-bottom: 20px;
     text-align: left;
 }
-
-#form #skills-label {
+/* #skills-label is an id nested from the id #form */
+#form #technologies-label {
     margin-bottom: 0px;
 }
 
@@ -601,18 +601,18 @@ Media Queries
         padding-right: 5%;
     }
 
-    #skills .fas,
+    #technologies .fas,
     #projects .fa-file-code,
     #contact .fa-paper-plane {
         font-size: 100px;
         margin-bottom: 4rem;
     }
 
-    #skills .fas {
+    #technologies .fas {
         margin-bottom: 6rem;
     }
 
-    #skills ul {
+    #technologies ul {
         -webkit-column-count: 2;  /* Chrome/Opera, Safari */
         -moz-column-count: 2; /* Mozilla Firefox */
         column-count: 2;
@@ -651,7 +651,7 @@ Media Queries
         padding-right: 15px;
     }
 
-    #skills li {
+    #technologies li {
         font-size: 28px;
         line-height: 80px;
     }
