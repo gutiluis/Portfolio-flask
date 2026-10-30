@@ -30,6 +30,9 @@
         </p>
         <div id="triangle6"></div>
     </section>
+
+
+    {% if current_user.is_authenticated and current_user.is_owner %}
     <section id="edit-delete">
         <a href="{{ url_for('project_edit', project_id=project.id) }}">
             <i class="fas fa-edit"></i>
@@ -40,4 +43,7 @@
             Delete
         </a>
     </section>
+    {% endif %}
+
+
 {% endblock %}
