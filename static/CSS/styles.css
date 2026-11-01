@@ -7,7 +7,7 @@ Colors
     --primary: #475c7a;
     --secondary: #fcbb6d;
     --accent: #d8737f;
-    --white:  #fff;
+    --white: #fff;
 }
 
 /*******
@@ -15,12 +15,12 @@ FONT
 *******/
 
 * {
-    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    font-family: "Roboto", Arial, Helvetica, sans-serif;
     color: var(--primary-text);
 }
 
-p, 
-li, 
+p,
+li,
 a {
     font-size: 20px;
 }
@@ -93,7 +93,7 @@ Header  - Homepage
     text-align: center;
 }
 
-.header h1{
+.header h1 {
     font-size: 32px;
     font-weight: bold;
 }
@@ -135,8 +135,8 @@ Header - Detail
     position: relative;
 }
 
-.header  .project-skills li::before {
-    content: '\FE61';
+.header .project-skills li::before {
+    content: "\FE61";
     position: absolute;
     left: -20px;
 }
@@ -175,7 +175,7 @@ About
     left: 5px;
 }
 
-#about  h2, 
+#about h2,
 #about p {
     color: var(--white);
     margin: auto;
@@ -198,8 +198,9 @@ Skills
 #technologies {
     margin-top: 7rem;
     text-align: center;
+    color: var(--primary-text);
 }
-
+/* technologies is an html class */
 #technologies .fas {
     color: var(--accent);
     font-size: 34px;
@@ -306,7 +307,7 @@ Contact
     color: var(--accent);
 }
 
-#contact  h2 {
+#contact h2 {
     margin-bottom: 2rem;
 }
 
@@ -317,7 +318,7 @@ Contact
     margin-bottom: 2rem;
 }
 
-#contact p  i {
+#contact p i {
     margin-right: 15px;
 }
 
@@ -331,21 +332,21 @@ Footer
     padding-bottom: 2rem;
 }
 
-.footer  i,
+.footer i,
 .footer p,
 .footer a {
     color: var(--white);
     text-decoration: none;
 }
 
-.footer .socials  {
+.footer .socials {
     padding-top: 3rem;
     margin-bottom: 2rem;
 }
 
 .footer .socials i {
     font-size: 30px;
-    padding: 0  10px;
+    padding: 0 10px;
 }
 
 .footer svg {
@@ -357,7 +358,7 @@ Footer
 Description - Detail
 ********************/
 
-#project-desc  {
+#project-desc {
     background-color: var(--secondary);
     position: relative;
     text-align: center;
@@ -415,7 +416,7 @@ Buttons - Detail
     text-decoration: none;
 }
 
-#edit-delete a:first-of-type  {
+#edit-delete a:first-of-type {
     margin-right: 20px;
 }
 
@@ -451,7 +452,7 @@ Form
     margin-bottom: 2rem;
 }
 
-#form input[type='month'] {
+#form input[type="month"] {
     width: 250px;
 }
 
@@ -487,12 +488,12 @@ Form
     padding: 9px 40px;
 }
 
-#form button[type='reset'] {
+#form button[type="reset"] {
     margin-right: 10px;
     background-color: var(--white);
 }
 
-#form button[type='submit'] {
+#form button[type="submit"] {
     background-color: var(--secondary);
 }
 
@@ -555,7 +556,7 @@ EXCEEDS - About Page
 Media Queries
 *******/
 
-@media (min-width: 992px){
+@media (min-width: 992px) {
     h2 {
         font-size: 62px;
     }
@@ -613,7 +614,7 @@ Media Queries
     }
 
     #technologies ul {
-        -webkit-column-count: 2;  /* Chrome/Opera, Safari */
+        -webkit-column-count: 2; /* Chrome/Opera, Safari */
         -moz-column-count: 2; /* Mozilla Firefox */
         column-count: 2;
         margin-left: 15%;
@@ -630,22 +631,22 @@ Media Queries
     }
 
     .footer .socials i {
-        padding: 0  20px;
+        padding: 0 20px;
     }
 
-    #project-desc  {
+    #project-desc {
         padding-right: 15%;
         padding-left: 15%;
     }
 
     #form input,
-    #form textarea  {
+    #form textarea {
         width: 450px;
         padding-left: 30px;
     }
 }
 
-@media (min-width: 1200px){
+@media (min-width: 1200px) {
     .navigation .nav-item {
         padding-left: 15px;
         padding-right: 15px;
@@ -665,13 +666,13 @@ Media Queries
     }
 
     .header .project-skills {
-        -webkit-column-count: 2;  /* Chrome/Opera, Safari */
+        -webkit-column-count: 2; /* Chrome/Opera, Safari */
         -moz-column-count: 2; /* Mozilla Firefox */
         column-count: 2;
         max-width: 500px;
     }
 
-    #edit-delete a:first-of-type  {
+    #edit-delete a:first-of-type {
         margin-right: 200px;
     }
 
