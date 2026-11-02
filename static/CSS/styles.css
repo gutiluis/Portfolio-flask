@@ -200,13 +200,8 @@ Technologies
     text-align: center;
     color: var(--primary-text);
 }
+/* getComputedStyle(document.querySelector('#technologies h2')).marginBottom // 16px */
 /* technologies is an html class */
-#technologies .fas {
-    color: var(--accent);
-    font-size: 34px;
-    margin-bottom: 2rem;
-}
-
 #technologies h2 {
     margin-bottom: 3rem;
 }
