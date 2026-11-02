@@ -1,5 +1,9 @@
 /* Matrix theme */
 
+body.technologies-page {
+    background-color: #000;
+}
+
 #technologies-page {
     min-height: 100vh;
     background-color: #000;
