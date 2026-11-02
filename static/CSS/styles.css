@@ -207,11 +207,6 @@ Technologies
     margin-bottom: 3rem;
 }
 
-#technologies ul {
-    padding: 0%;
-    margin-bottom: 6rem;
-}
-
 #technologies li {
     list-style-type: none;
     line-height: 50px;
@@ -598,23 +593,10 @@ Media Queries
         padding-right: 5%;
     }
 
-    #technologies .fas,
     #projects .fa-file-code,
     #contact .fa-paper-plane {
         font-size: 100px;
         margin-bottom: 4rem;
-    }
-
-    #technologies .fas {
-        margin-bottom: 6rem;
-    }
-
-    #technologies ul {
-        -webkit-column-count: 2; /* Chrome/Opera, Safari */
-        -moz-column-count: 2; /* Mozilla Firefox */
-        column-count: 2;
-        margin-left: 15%;
-        margin-right: 15%;
     }
 
     #contact {
