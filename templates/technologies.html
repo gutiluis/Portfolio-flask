@@ -5,15 +5,19 @@
 {% block styles %}
 
 <link rel="stylesheet" href="{{ url_for('static', filename='CSS/technology.css') }}">
+<style>
+    body {
+        background-color: #050505;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
 <section id="technologies-page" class="container-fluid">
-    <!-- selector .header -->
+    <!-- a selector can be an id or a class-->
     <section class="header">
         <h1>Technologies</h1>
     </section>
-    <!-- selector #body-technologies -->
     <section id="technologies" class="technologies">
         <h2>Languages, Markup & Style</h2>
         <ul class="technology-list">
