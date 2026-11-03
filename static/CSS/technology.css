@@ -1,15 +1,15 @@
 /* Matrix theme */
 
-body {
-    background-color: #050505;
-}
-
 #technologies-page {
     min-height: 100vh;
     background-color: #000;
     color: #00ff41;
     font-family: "Courier New", monospace;
     padding: 40px;
+}
+
+body:has(#technologies-page) {
+    background-color: #000;
 }
 
 /* Headers */
