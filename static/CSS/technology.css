@@ -1,15 +1,7 @@
 /* Matrix theme */
 
-
-body {
-    background-color: rgb(5, 5, 5);
-}
-
-
 #technologies-page {
     min-height: 100vh;
-    background-color: #000;
-    color: #00ff41;
     font-family: "Courier New", monospace;
     padding: 40px;
 }
@@ -35,7 +27,7 @@ body {
 }
 
 /* Technology sections */
-
+/* class .technologies inside id technologies-page */
 #technologies-page .technologies {
     background-color: #050505;
     padding: 25px;
