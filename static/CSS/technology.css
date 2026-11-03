@@ -12,6 +12,11 @@ body:has(#technologies-page) {
     background-color: #000;
 }
 
+body:has(#technologies-page) footer {
+    background-color: #000;
+    color: #00ff41;
+}
+
 /* Headers */
 
 #technologies-page h1,

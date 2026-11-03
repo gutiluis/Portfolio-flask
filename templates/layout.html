@@ -21,129 +21,138 @@
         <link rel="stylesheet" href="/static/CSS/technology.css" />
     </head>
     <body>
-        <section class="navigation">
-            <!-- bootstrap utility class which is already defined in the stylesheet -->
-            <!-- navbar and navbar-expand-lg/neither bootstrap classes need to be under styles.css -->
-            <!-- navbar is the bootrsap class that provides styling -->
-            <!-- navbar-expand-lg controls responsive expansion -->
-            <!-- navbar is one class, and navbar-expand-lg is another class -->
-            <nav class="navbar navbar-expand-lg">
-                <!-- constrains the content width -->
-                <!-- container-fluid provides a responsive full-width container -->
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="#">technobool by LG.</a>
+        <header>
+            <h1>Portfolio</h1>
+        </header>
+        <main>
+            <section class="navigation">
+                <!-- bootstrap utility class which is already defined in the stylesheet -->
+                <!-- navbar and navbar-expand-lg/neither bootstrap classes need to be under styles.css -->
+                <!-- navbar is the bootrsap class that provides styling -->
+                <!-- navbar-expand-lg controls responsive expansion -->
+                <!-- navbar is one class, and navbar-expand-lg is another class -->
+                <nav class="navbar navbar-expand-lg">
+                    <!-- constrains the content width -->
+                    <!-- container-fluid provides a responsive full-width container -->
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">technobool by LG.</a>
 
-                    <!-- data-bs-toggle="collapse" tells bootstrap that this button controls a collapsible component -->
-                    <button
-                        class="toggle"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarContent"
-                        aria-controls="navbarContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarContent">
-                        <!-- navbar-nav styles navigation lists -->
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <!-- nav-item styles navigation items -->
-                            <li class="nav-item">
-                                <!-- nav-link styles navigation links -->
-                                <a
-                                    class="nav-link active"
-                                    aria-current="page"
-                                    href="{{ url_for('index') }}"
-                                    >Home
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link"
-                                    href="{{ url_for('about') }}"
-                                    >About
-                                </a>
-                            </li>
-                            <!-- hide -->
-                            {% if request.endpoint != 'technologies' %}
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link"
-                                    href="{{ url_for('technologies') }}"
-                                    >Technologies
-                                </a>
-                            </li>
-                            {% endif %}
-                            <li class="nav-item dropdown">
-                                <a
-                                    class="nav-link dropdown-toggle"
-                                    href="#"
-                                    id="navbarDropdown"
-                                    role="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false"
-                                >
-                                    Products
-                                </a>
-                                <ul
-                                    class="dropdown-menu"
-                                    aria-labelledby="navbarDropdown"
-                                >
-                                    {% for project in projects %}
-                                    <li>
-                                        <a
-                                            class="dropdown-item"
-                                            href="{{ url_for('project_detail', project_id=project.id) }}"
-                                        >
-                                            {{ project.title }}
-                                        </a>
-                                    </li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link"
-                                    href="{{ url_for('index') }}#contact"
-                                    >Contact</a
-                                >
-                            </li>
-                            {% if current_user.is_authenticated and
-                            current_user.is_owner %}
-                            <li class="nav-item">
-                                <!-- test if a variable is defined, not empty and not false with if statement. -->
-                                <a
-                                    class="nav-link"
-                                    href="{{ url_for('add_project') }}"
-                                    >Add Project</a
-                                >
-                            </li>
-                            {% endif %} {% if current_user.is_authenticated and
-                            current_user.is_owner %}
-                            <li class="nav-item">
-                                <a
-                                    class="nav-link"
-                                    href="{{ url_for('logout') }}"
-                                    >Logout</a
-                                >
-                            </li>
-                            {% endif %}
-                        </ul>
+                        <!-- data-bs-toggle="collapse" tells bootstrap that this button controls a collapsible component -->
+                        <button
+                            class="toggle"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#navbarContent"
+                            aria-controls="navbarContent"
+                            aria-expanded="false"
+                            aria-label="Toggle navigation"
+                        >
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <div
+                            class="collapse navbar-collapse"
+                            id="navbarContent"
+                        >
+                            <!-- navbar-nav styles navigation lists -->
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <!-- nav-item styles navigation items -->
+                                <li class="nav-item">
+                                    <!-- nav-link styles navigation links -->
+                                    <a
+                                        class="nav-link active"
+                                        aria-current="page"
+                                        href="{{ url_for('index') }}"
+                                        >Home
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a
+                                        class="nav-link"
+                                        href="{{ url_for('about') }}"
+                                        >About
+                                    </a>
+                                </li>
+                                <!-- hide -->
+                                {% if request.endpoint != 'technologies' %}
+                                <li class="nav-item">
+                                    <a
+                                        class="nav-link"
+                                        href="{{ url_for('technologies') }}"
+                                        >Technologies
+                                    </a>
+                                </li>
+                                {% endif %}
+                                <li class="nav-item dropdown">
+                                    <a
+                                        class="nav-link dropdown-toggle"
+                                        href="#"
+                                        id="navbarDropdown"
+                                        role="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                    >
+                                        Products
+                                    </a>
+                                    <ul
+                                        class="dropdown-menu"
+                                        aria-labelledby="navbarDropdown"
+                                    >
+                                        {% for project in projects %}
+                                        <li>
+                                            <a
+                                                class="dropdown-item"
+                                                href="{{ url_for('project_detail', project_id=project.id) }}"
+                                            >
+                                                {{ project.title }}
+                                            </a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a
+                                        class="nav-link"
+                                        href="{{ url_for('index') }}#contact"
+                                        >Contact</a
+                                    >
+                                </li>
+                                {% if current_user.is_authenticated and
+                                current_user.is_owner %}
+                                <li class="nav-item">
+                                    <!-- test if a variable is defined, not empty and not false with if statement. -->
+                                    <a
+                                        class="nav-link"
+                                        href="{{ url_for('add_project') }}"
+                                        >Add Project</a
+                                    >
+                                </li>
+                                {% endif %} {% if current_user.is_authenticated
+                                and current_user.is_owner %}
+                                <li class="nav-item">
+                                    <a
+                                        class="nav-link"
+                                        href="{{ url_for('logout') }}"
+                                        >Logout</a
+                                    >
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
                     </div>
-                </div>
-                {% if current_user.is_authenticated and current_user.is_owner %}
-                <form action="{{ url_for('logout') }}" method="POST">
-                    <button
-                        type="submit"
-                        class="nav-link border-0 bg-transparent"
-                    >
-                        Logout
-                    </button>
-                </form>
-                {% endif %}
-            </nav>
-        </section>
+                    {% if current_user.is_authenticated and
+                    current_user.is_owner %}
+                    <form action="{{ url_for('logout') }}" method="POST">
+                        <button
+                            type="submit"
+                            class="nav-link border-0 bg-transparent"
+                        >
+                            Logout
+                        </button>
+                    </form>
+                    {% endif %}
+                </nav>
+            </section>
+        </main>
         {% block content %} {% endblock %}
     </body>
     <script
@@ -151,10 +160,9 @@
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
         crossorigin="anonymous"
     ></script>
-
     <footer>
         <section id="footer" class="footer">
-            <p>&copy; <span id="year"></span> technobool by LG.</p>
+            <p>Copyright&copy;<span id="year"></span>technobool by LG.</p>
             <div class="socials">
                 <a href="https://github.com/gutiluis">
                     <i class="fab fa-github"></i>
@@ -166,9 +174,10 @@
                     <i class="fab fa-slack"></i>
                 </a>
             </div>
+            <script>
+                document.getElementById("year").textContent =
+                    new Date().getFullYear();
+            </script>
         </section>
     </footer>
-    <script>
-        document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
 </html>
