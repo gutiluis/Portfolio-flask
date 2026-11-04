@@ -14,6 +14,13 @@ body:has(#technologies-page) {
     --primary: #000;
 }
 
+#footer,
+#footer p,
+#footer a,
+#footer i {
+    color: #00ff41;
+}
+
 /* Headers */
 
 #technologies-page h1,
