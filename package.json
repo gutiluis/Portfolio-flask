@@ -1,0 +1,27 @@
+{
+    "name": "portfolio-flask",
+    "version": "1.0.0",
+    "description": "> [!WARNING] > CURRENTLY UNDER DEVELOPMENT",
+    "main": "index.js",
+    "scripts": {
+        "build": "npx @tailwindcss/cli -i ./static/src/input.css -o ./static/CSS/styles.css",
+        "watch": "npx @tailwindcss/cli -i ./static/src/input.css -o ./static/CSS/styles.css --watch",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/gutiluis/Portfolio-flask.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "bugs": {
+        "url": "https://github.com/gutiluis/Portfolio-flask/issues"
+    },
+    "homepage": "https://github.com/gutiluis/Portfolio-flask#readme",
+    "devDependencies": {
+        "@tailwindcss/cli": "^4.3.4",
+        "tailwindcss": "^4.3.4"
+    }
+}
