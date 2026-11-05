@@ -1,36 +1,51 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <section class="header">
-        <h1>Technology Solutions, Software Architecture & Integrations</h1>
-    </section>
+<section class="mx-auto max-w-6xl px-6 py-16">
 
-    <section id="about">
-        <p>
-            Designing and building scalable software solutions, robust system architectures, and high-performance APIs. Focused on developing resilient web applications, integrating services, and engineering reliable, maintainable systems.
+    <header class="mb-12 text-center">
+        <h1 class="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+            Technology Solutions, Software Architecture & Integrations
+        </h1>
+    </header>
+
+    <section id="about" class="mx-auto mb-20 max-w-4xl text-center">
+        <p class="text-lg leading-relaxed text-gray-300">
+            Designing and building scalable software solutions, robust system architectures, and high-performance APIs.
+            Focused on developing resilient web applications, integrating services, and engineering reliable,
+            maintainable systems.
         </p>
-        <div id="triangle1"></div>
-        <div id="triangle2"></div>
     </section>
 
     <section id="projects">
-        <div id="triangle3"></div>
-        <i class="fas fa-file-code"></i>
-        <h2>Products</h2>
-        <div id="project-list">
+        <header class="mb-8 flex items-center gap-3">
+            <i class="fas fa-file-code text-2xl" aria-hidden="true"></i>
+            <h2 class="text-2xl font-bold">Products</h2>
+        </header>
+
+        <div id="project-list" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
             {% for project in projects %}
-                <div class="a-project">
-                    <h3>
-                        <a href="{{ url_for('project_detail', project_id=project.id) }}">
-                            {{ project.title }}
-                        </a>
-                    </h3>
-                    <p>
-                        {{ project.description }} 
-                    </p>
-                </div>
+            <article class="rounded-lg border border-gray-700 bg-gray-900 p-6 transition hover:border-green-500">
+                <h3 class="mb-3 text-xl font-semibold">
+                    <a href="{{ url_for('project_detail', project_id=project.id) }}"
+                        class="text-green-400 hover:text-green-300">
+                        {{ project.title }}
+                    </a>
+                </h3>
+
+                <p class="leading-relaxed text-gray-300">
+                    {{ project.description }}
+                </p>
+            </article>
+            {% else %}
+            <p class="text-gray-400">
+                No products are currently available.
+            </p>
             {% endfor %}
-        <div id="triangle4"></div>
+
+        </div>
     </section>
+
+</section>
 {% endblock %}

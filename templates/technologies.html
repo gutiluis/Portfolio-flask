@@ -1,71 +1,85 @@
 {% extends 'layout.html' %}
 
+{% block content %}
+<section id="technologies-page" class="mx-auto max-w-6xl px-6 py-12">
+    <header class="mb-10">
+        <h1 class="text-4xl font-bold">Technologies</h1>
+    </header>
 
-<section id="technologies-page" class="container-fluid">
-    <!-- a selector can be an id or a class-->
-    <section class="header">
-        <h1>Technologies</h1>
-    </section>
-    <section id="technologies" class="technologies">
-        <h2>Languages, Markup & Style</h2>
-        <ul class="technology-list">
-            <li>Python</li>
-            <li>JavaScript</li>
-            <li>TypeScript</li>
-            <li>Rust</li>
-            <li>Linux/Bash</li>
-            <li>SQL</li>
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>SQL</li>
-        </ul>
+    <section id="technologies" class="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
 
-        <h2>Web Frameworks & Libraries</h2>
-        <ul class="technology-list">
-            <li>Axum</li>
-            <li>Flask/SQLAlchemy/Migrate</li>
-            <li>Jinja2</li>
-            <li>Bootstrap</li>
-        </ul>
+        <div>
+            <h2 class="mb-4 text-xl font-semibold">Languages, Markup & Style</h2>
+            <ul class="space-y-2">
+                <li>Python</li>
+                <li>JavaScript</li>
+                <li>TypeScript</li>
+                <li>Rust</li>
+                <li>Linux/Bash</li>
+                <li>SQL</li>
+                <li>HTML</li>
+                <li>CSS</li>
+            </ul>
+        </div>
 
-        <h2>Testing & Debugging</h2>
-        <ul class="technology-list">
-            <li>Unittest</li>
-            <li>End-to-End Testing</li>
-            <li>API Testing</li>
-            <li>Bats</li>
-            <li>Pdb</li>
-            <li>Pytest</li>
-            <li>Logging</li>
-            <li>Playwright</li>
-        </ul>
+        <div>
+            <h2 class="mb-4 text-xl font-semibold">Web Frameworks & Libraries</h2>
+            <ul class="space-y-2">
+                <li>Axum</li>
+                <li>Flask / SQLAlchemy / Flask-Migrate</li>
+                <li>Jinja2</li>
+                <li>Tailwind CSS</li>
+            </ul>
+        </div>
 
-        <h2>Deployment, Infrastructure & Production</h2>
-        <ul class="technology-list">
-            <li>Docker</li>
-            <li>Nginx</li>
-            <li>Gunicorn</li>
-            <li>OCI</li>
-            <li>Systemd</li>
-            <li>Git/GitHub</li>
-            <li>GitHub Actions</li>
-            <li>Virtual Environments</li>
-            <li>Virtual Machines</li>
-        </ul>
+        <div>
+            <h2 class="mb-4 text-xl font-semibold">Testing & Debugging</h2>
+            <ul class="space-y-2">
+                <li>Unittest</li>
+                <li>End-to-End Testing</li>
+                <li>API Testing</li>
+                <li>Bats</li>
+                <li>Pdb</li>
+                <li>Pytest</li>
+                <li>Logging</li>
+                <li>Playwright</li>
+            </ul>
+        </div>
 
-        <h2>RDBMS</h2>
-        <ul class="technology-list">
-            <li>MySQL</li>
-            <li>SQLite</li>
-        </ul>
+        <div>
+            <h2 class="mb-4 text-xl font-semibold">Deployment, Infrastructure & Production</h2>
+            <ul class="space-y-2">
+                <li>Docker</li>
+                <li>Nginx</li>
+                <li>Gunicorn</li>
+                <li>OCI</li>
+                <li>Systemd</li>
+                <li>Git / GitHub</li>
+                <li>GitHub Actions</li>
+                <li>Virtual Environments</li>
+                <li>Virtual Machines</li>
+            </ul>
+        </div>
 
-        <h2>Data Formats & Tools</h2>
-        <ul class="technology-list">
-            <li>JSON</li>
-            <li>YAML</li>
-            <li>TOML</li>
-            <li>REST APIs</li>
-            <li>CLI</li>
-        </ul>
+        <div>
+            <h2 class="mb-4 text-xl font-semibold">RDBMS</h2>
+            <ul class="space-y-2">
+                <li>MySQL</li>
+                <li>SQLite</li>
+            </ul>
+        </div>
+
+        <div>
+            <h2 class="mb-4 text-xl font-semibold">Data Formats & Tools</h2>
+            <ul class="space-y-2">
+                <li>JSON</li>
+                <li>YAML</li>
+                <li>TOML</li>
+                <li>REST APIs</li>
+                <li>CLI</li>
+            </ul>
+        </div>
+
     </section>
 </section>
+{% endblock %}
