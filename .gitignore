@@ -4,3 +4,6 @@ venv/
 .env
 *.py[cod]
 node_modules/
+projects.db
+instance/projects.db
+instance/projects.db.bak
