@@ -18,58 +18,63 @@
         <header class="border-b border-green-900">
             <div class="mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-4 px-6 py-5">
 
-                <a href="{{ url_for('index') }}" class="text-2xl font-bold tracking-wide text-green-400">
-                    technobool by LG.
-                </a>
-
-                <nav class="col-start-2 flex flex-wrap items-center justify-center gap-6">
-
-                    <a href="{{ url_for('index') }}" class="transition-colors hover:text-green-200">
-                        Home
+                <div class="justify-self-start">
+                    <a href="{{ url_for('index') }}" class="text-2xl font-bold tracking-wide text-green-400">
+                        technobool by LG.
                     </a>
+                </div>
 
-                    <a href="{{ url_for('about') }}" class="transition-colors hover:text-green-200">
-                        About
-                    </a>
+                <div class="justify-self-center">
 
-                    {% if request.endpoint != 'technologies' %}
-                    <a href="{{ url_for('technologies') }}" class="transition-colors hover:text-green-200">
-                        Technologies
-                    </a>
-                    {% endif %}
+                    <nav class="col-start-2 flex flex-wrap items-center justify-center gap-6">
 
-                    <div class="group relative">
-                        <button type="button" class="flex items-center gap-2 transition-colors hover:text-green-200"
-                            aria-haspopup="true">
-                            Products
-                            <span aria-hidden="true">▾</span>
-                        </button>
+                        <a href="{{ url_for('index') }}" class="transition-colors hover:text-green-200">
+                            Home
+                        </a>
 
-                        <ul
-                            class="invisible absolute left-0 top-full z-50 mt-2 min-w-48 rounded border border-green-900 bg-gray-950 py-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                        <a href="{{ url_for('about') }}" class="transition-colors hover:text-green-200">
+                            About
+                        </a>
 
-                            {% for project in projects %}
-                            <li>
-                                <a href="{{ url_for('project_detail', project_id=project.id) }}"
-                                    class="block px-4 py-2 hover:bg-green-950 hover:text-green-200">
-                                    {{ project.title }}
-                                </a>
-                            </li>
-                            {% endfor %}
+                        {% if request.endpoint != 'technologies' %}
+                        <a href="{{ url_for('technologies') }}" class="transition-colors hover:text-green-200">
+                            Technologies
+                        </a>
+                        {% endif %}
 
-                        </ul>
-                    </div>
+                        <div class="group relative">
+                            <button type="button" class="flex items-center gap-2 transition-colors hover:text-green-200"
+                                aria-haspopup="true">
+                                Products
+                                <span aria-hidden="true">▾</span>
+                            </button>
 
-                    <a href="{{ url_for('index') }}#contact" class="transition-colors hover:text-green-200">
-                        Contact
-                    </a>
+                            <ul
+                                class="invisible absolute left-0 top-full z-50 mt-2 min-w-48 rounded border border-green-900 bg-gray-950 py-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
 
-                    {% if current_user.is_authenticated and current_user.is_owner %}
-                    <a href="{{ url_for('add_project') }}" class="transition-colors hover:text-green-200">
-                        Add Project
-                    </a>
-                    {% endif %}
+                                {% for project in projects %}
+                                <li>
+                                    <a href="{{ url_for('project_detail', project_id=project.id) }}"
+                                        class="block px-4 py-2 hover:bg-green-950 hover:text-green-200">
+                                        {{ project.title }}
+                                    </a>
+                                </li>
+                                {% endfor %}
 
+                            </ul>
+
+                            <a href="{{ url_for('index') }}#contact" class="transition-colors hover:text-green-200">
+                                Contact
+                            </a>
+
+                            {% if current_user.is_authenticated and current_user.is_owner %}
+                            <a href="{{ url_for('add_project') }}" class="transition-colors hover:text-green-200">
+                                Add Project
+                            </a>
+                            {% endif %}
+                    </nav>
+                </div>
+                <div class="justify-self-end">
                     {% if current_user.is_authenticated and current_user.is_owner %}
                     <form action="{{ url_for('logout') }}" method="POST">
                         <button type="submit" class="text-green-400 transition-colors hover:text-red-400">
@@ -82,8 +87,8 @@
                         Login
                     </a>
                     {% endif %}
+                </div>
 
-                </nav>
             </div>
         </header>
 
