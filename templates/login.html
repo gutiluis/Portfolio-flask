@@ -1,36 +1,42 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <section class="header">
-        <h1>Owner Login</h1>
-    </section>
+<section class="mx-auto max-w-md px-6">
 
-    <section id="form">
+    <header class="mb-8">
+        <h1 class="text-3xl font-bold">Owner Login</h1>
+    </header>
+
+    <section id="form" class="rounded-xl border border-green-900 bg-gray-950 p-8">
+
         {% if error %}
-            <p>{{ error }}</p>
+        <p class="mb-4 text-red-400">{{ error }}</p>
         {% endif %}
 
-        <form action="{{ url_for('login') }}" method="POST">
+        <form action="{{ url_for('login') }}" method="POST" class="space-y-6">
 
-            <label for="username">Username</label>
-            <input
-                type="text"
-                name="username"
-                id="username"
-                autocomplete="username"
-                required
-            >
+            <div>
+                <label for="username" class="mb-2 block text-left">
+                    Username
+                </label>
+                <input type="text" name="username" id="username" autocomplete="username" required
+                    class="w-full rounded-lg border border-green-900 bg-black px-4 py-3 text-green-400 outline-none focus:border-green-500">
+            </div>
 
-            <label for="password">Password</label>
-            <input
-                type="password"
-                name="password"
-                id="password"
-                autocomplete="current-password"
-                required
-            >
+            <div>
+                <label for="password" class="mb-2 block text-left">
+                    Password
+                </label>
+                <input type="password" name="password" id="password" autocomplete="current-password" required
+                    class="w-full rounded-lg border border-green-900 bg-black px-4 py-3 text-green-400 outline-none focus:border-green-500">
+            </div>
 
-            <button type="submit">Log In</button>
+            <button type="submit"
+                class="w-full rounded-lg border border-green-500 px-4 py-3 transition hover:bg-green-500 hover:text-black">
+                Log In
+            </button>
+
         </form>
     </section>
+</section>
 {% endblock %}
