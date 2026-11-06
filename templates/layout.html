@@ -62,16 +62,17 @@
                                 {% endfor %}
 
                             </ul>
+                        </div>
 
-                            <a href="{{ url_for('index') }}#contact" class="transition-colors hover:text-green-200">
-                                Contact
-                            </a>
+                        <a href="{{ url_for('index') }}#contact" class="transition-colors hover:text-green-200">
+                            Contact
+                        </a>
 
-                            {% if current_user.is_authenticated and current_user.is_owner %}
-                            <a href="{{ url_for('add_project') }}" class="transition-colors hover:text-green-200">
-                                Add Project
-                            </a>
-                            {% endif %}
+                        {% if current_user.is_authenticated and current_user.is_owner %}
+                        <a href="{{ url_for('add_project') }}" class="transition-colors hover:text-green-200">
+                            Add Project
+                        </a>
+                        {% endif %}
                     </nav>
                 </div>
                 <div class="justify-self-end">
