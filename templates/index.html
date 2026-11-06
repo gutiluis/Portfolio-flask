@@ -18,7 +18,7 @@
     </section>
 
     <section id="projects">
-        <header class="mb-8 flex items-center gap-3">
+        <header class="mb-8 flex items-center justify-center gap-3">
             <i class="fas fa-file-code text-2xl" aria-hidden="true"></i>
             <h2 class="text-2xl font-bold">Products</h2>
         </header>
@@ -26,7 +26,8 @@
         <div id="project-list" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
             {% for project in projects %}
-            <article class="rounded-lg border border-gray-700 bg-gray-900 p-6 transition hover:border-green-500">
+            <article
+                class="rounded-lg border border-gray-700 bg-gray-900 p-6 text-center transition hover:border-green-500">
                 <h3 class="mb-3 text-xl font-semibold">
                     <a href="{{ url_for('project_detail', project_id=project.id) }}"
                         class="text-green-400 hover:text-green-300">
