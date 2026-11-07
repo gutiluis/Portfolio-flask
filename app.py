@@ -253,7 +253,8 @@ def about():
 @app.route("/technologies")
 def technologies():
     """Tech-Stack"""
-    return render_template("technologies.html")
+    projects = Project.query.all()
+    return render_template("technologies.html", projects=projects)
 
 
 @app.route("/contact", methods=["GET", "POST"])
