@@ -10,89 +10,128 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
 
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/styles.css') }}" />
+    <script src="{{ url_for('static', filename='js/navbar.js') }}" defer></script>
 </head>
 
 <body class="min-h-screen bg-black text-green-400">
     <div id="page" class="flex min-h-screen flex-col">
 
+
         <header class="border-b border-green-900">
-            <div class="mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-4 px-6 py-5">
+            <nav class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
 
-                <div class="justify-self-start">
-                    <a href="{{ url_for('index') }}" class="text-2xl font-bold tracking-wide text-green-400">
-                        technobool by LG.
+                <!-- Logo -->
+                <a href="{{ url_for('index') }}" class="text-2xl font-bold text-green-400">
+                    technobool by LG.
+                </a>
+
+                <!-- Desktop navigation -->
+                <div class="hidden items-center gap-8 md:flex">
+
+                    <a href="{{ url_for('index') }}" class="transition-colors hover:text-green-200">
+                        Home
                     </a>
-                </div>
 
-                <div class="justify-self-center">
+                    <a href="{{ url_for('about') }}" class="transition-colors hover:text-green-200">
+                        About
+                    </a>
 
-                    <nav class="col-start-2 flex flex-wrap items-center justify-center gap-6">
-
-                        <a href="{{ url_for('index') }}" class="transition-colors hover:text-green-200">
-                            Home
-                        </a>
-
-                        <a href="{{ url_for('about') }}" class="transition-colors hover:text-green-200">
-                            About
-                        </a>
-
-                        {% if request.endpoint != 'technologies' %}
-                        <a href="{{ url_for('technologies') }}" class="transition-colors hover:text-green-200">
-                            Technologies
-                        </a>
-                        {% endif %}
-
-                        <div class="group relative">
-                            <button type="button" class="flex items-center gap-2 transition-colors hover:text-green-200"
-                                aria-haspopup="true">
-                                Products
-                                <span aria-hidden="true">▾</span>
-                            </button>
-
-                            <ul
-                                class="invisible absolute left-0 top-full z-50 mt-2 min-w-48 rounded border border-green-900 bg-gray-950 py-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-
-                                {% for project in projects %}
-                                <li>
-                                    <a href="{{ url_for('project_detail', project_id=project.id) }}"
-                                        class="block px-4 py-2 hover:bg-green-950 hover:text-green-200">
-                                        {{ project.title }}
-                                    </a>
-                                </li>
-                                {% endfor %}
-
-                            </ul>
-                        </div>
-
-                        <a href="{{ url_for('index') }}#contact" class="transition-colors hover:text-green-200">
-                            Contact
-                        </a>
-
-                        {% if current_user.is_authenticated and current_user.is_owner %}
-                        <a href="{{ url_for('add_project') }}" class="transition-colors hover:text-green-200">
-                            Add Project
-                        </a>
-                        {% endif %}
-                    </nav>
-                </div>
-                <div class="justify-self-end">
-                    {% if current_user.is_authenticated and current_user.is_owner %}
-                    <form action="{{ url_for('logout') }}" method="POST">
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                        <button type="submit" class="text-green-400 transition-colors hover:text-red-400">
-                            Logout
-                        </button>
-                    </form>
-                    {% else %}
-                    <a href="{{ url_for('login') }}"
-                        class="rounded-lg border border-green-500 px-4 py-2 text-green-400 transition hover:bg-green-500 hover:text-black">
-                        Login
+                    {% if request.endpoint != 'technologies' %}
+                    <a href="{{ url_for('technologies') }}" class="transition-colors hover:text-green-200">
+                        Technologies
                     </a>
                     {% endif %}
+
+                    <!-- Products dropdown -->
+                    <div class="group relative">
+                        <button type="button" class="flex items-center gap-2 transition-colors hover:text-green-200"
+                            aria-haspopup="true">
+                            Products
+                            <span aria-hidden="true">⌄</span>
+                        </button>
+
+                        <ul
+                            class="invisible absolute left-0 top-full z-50 mt-2 min-w-48 rounded border border-green-900 bg-gray-950 py-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+
+                            {% for project in projects %}
+                            <li>
+                                <a href="{{ url_for('project_detail', project_id=project.id) }}"
+                                    class="block px-4 py-2 hover:bg-green-950 hover:text-green-200">
+                                    {{ project.title }}
+                                </a>
+                            </li>
+                            {% endfor %}
+
+                        </ul>
+                    </div>
+
+                    <a href="{{ url_for('contact') }}" class="transition-colors hover:text-green-200">
+                        Contact
+                    </a>
+
+                    {% if current_user.is_authenticated and current_user.is_owner %}
+                    <a href="{{ url_for('add_project') }}" class="transition-colors hover:text-green-200">
+                        Add Project
+                    </a>
+                    {% endif %}
+
                 </div>
+
+                <!-- Authentication + mobile button -->
+                <div class="flex items-center gap-4">
+
+                    <div class="hidden md:block">
+                        {% if current_user.is_authenticated and current_user.is_owner %}
+                        <form action="{{ url_for('logout') }}" method="POST">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="text-green-400 transition-colors hover:text-red-400">
+                                Logout
+                            </button>
+                        </form>
+                        {% else %}
+                        <a href="{{ url_for('login') }}"
+                            class="rounded-lg border border-green-500 px-4 py-2 text-green-400 transition hover:bg-green-500 hover:text-black">
+                            Login
+                        </a>
+                        {% endif %}
+                    </div>
+
+                    <!-- Mobile menu button -->
+                    <button id="menu-button" type="button" class="text-2xl text-green-400 md:hidden"
+                        aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-menu">
+                        ☰
+                    </button>
+
+                </div>
+            </nav>
+
+            <!-- Mobile navigation -->
+            <div id="mobile-menu" class="hidden flex-col gap-4 px-6 pb-5 md:hidden">
+
+                <a href="{{ url_for('index') }}">Home</a>
+                <a href="{{ url_for('about') }}">About</a>
+                {% if request.endpoint != 'technologies' %}
+                <a href="{{ url_for('technologies') }}">Technologies</a>
+                {% endif %}
+
+                <a href="{{ url_for('contact') }}">Contact</a>
+
+                {% if current_user.is_authenticated and current_user.is_owner %}
+                <a href="{{ url_for('add_project') }}">Add Project</a>
+
+                <form action="{{ url_for('logout') }}" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="text-green-400 hover:text-red-400">
+                        Logout
+                    </button>
+                </form>
+                {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                {% endif %}
 
             </div>
         </header>
+
 
         <main class="mx-auto w-full max-w-6xl px-6 py-12 text-center">
             {% block content %}{% endblock %}

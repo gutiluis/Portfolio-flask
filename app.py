@@ -4,7 +4,7 @@
 
 from dotenv import load_dotenv
 from datetime import datetime
-from flask import render_template, url_for, request, redirect, abort
+from flask import render_template, url_for, request, redirect, abort, flash
 from flask_login import (
     login_required,
     current_user,
@@ -22,10 +22,9 @@ from flask_migrate import Migrate
 from models import db, Project, app, User, mail
 from sqlalchemy import or_
 import os
+import re
 
 load_dotenv()
-
-app.config["SECRET_KEY"] = os.environ["SECRET_KEY"]
 
 
 migrate = Migrate(app, db)
@@ -33,6 +32,8 @@ migrate = Migrate(app, db)
 login_manager = LoginManager()
 login_manager.login_view = "login"
 login_manager.init_app(app)
+
+app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 
 csrf = CSRFProtect(app)
 limiter = Limiter(
@@ -253,6 +254,56 @@ def about():
 def technologies():
     """Tech-Stack"""
     return render_template("technologies.html")
+
+
+@app.route("/contact", methods=["GET", "POST"])
+@limiter.limit("5 per minute", methods=["POST"])
+def contact():
+    if request.method == "POST":
+        name = request.form.get("name", "").strip()
+        sender_email = request.form.get("email", "").strip()
+        subject = request.form.get("subject", "").strip()
+        message = request.form.get("message", "").strip()
+
+        if not all([name, sender_email, subject, message]):
+            flash("All fields are required.", "error")
+            return redirect(url_for("contact"))
+
+        if not re.fullmatch(r"[^@\s]+@[^@\s]+\.[^@\s]+", sender_email):
+            flash("Please enter a valid email address.", "error")
+            return redirect(url_for("contact"))
+
+        if (
+            len(name) > 100
+            or len(sender_email) > 254
+            or len(subject) > 150
+            or len(message) > 5000
+        ):
+            flash("One or more fields exceed the allowed length.", "error")
+            return redirect(url_for("contact"))
+
+        contact_email = app.config.get("CONTACT_EMAIL")
+        if not contact_email:
+            flash("Contact email is not configured.", "error")
+            return redirect(url_for("contact"))
+
+        email_message = Message(
+            subject=f"Portfolio contact: {subject}",
+            recipients=[contact_email],
+            reply_to=sender_email,
+            body=(f"Name: {name}\nEmail: {sender_email}\n\nMessage:\n{message}"),
+        )
+
+        try:
+            mail.send(email_message)
+            flash("Your message has been sent successfully!", "success")
+        except Exception:
+            app.logger.exception("Failed to send contact email.")
+            flash("Unable to send your message. Please try again later.", "error")
+
+        return redirect(url_for("contact"))
+
+    return render_template("contact.html")
 
 
 @app.errorhandler(404)
