@@ -11,50 +11,32 @@ Flask app and API rendering templates
 
 ```
 git clone https://github.com/gutiluis/Portfolio-flask.git
+cd ~/Portfolio-flask
+chmod +x setup.sh
+./setup.sh
 ```
-
----
-
-## Features
-
----
-
-<table align="center">
-  <tr>
-    <th colspan="3" align="center"><h3>Tech-Stack</h3></th>
-  </tr>
-  <tr>
-    <td align="center">
-      <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"><br>
-      <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white"><br>
-      <img src="https://img.shields.io/badge/Jinja-B41717?style=for-the-badge&logo=jinja&logoColor=white">
-    </td>
-    <td align="center">
-      <img src="https://img.shields.io/badge/SQLAlchemy-D71F00?style=for-the-badge&logo=sqlalchemy&logoColor=white"><br>
-      <img src="https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white"><br>
-      <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
-    </td>
-    <td align="center">
-      <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"><br>
-      <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white"><br>
-      <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white">
-    </td>
-  </tr>
-</table>
 
 ---
 
 ## Tech-Stack
 
+Python
+
+HTML
+
 SQLite
 
-Flask-AQLAlchemy
+Flask-SQLAlchemy
 
-SQLAlchemy
+Jinja2
 
-Flask
+Tailwind CSS
 
-JINJA2
+Redis
+
+Gunicorn
+
+Nginx
 
 ---
 
