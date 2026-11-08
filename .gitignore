@@ -2,8 +2,12 @@ __pycache__/
 venv/
 .venv/
 .env
+.env.*
+!.env.example
 *.py[cod]
+*.pyc
 node_modules/
 projects.db
+instance/
 instance/projects.db
 instance/projects.db.bak

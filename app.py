@@ -74,6 +74,17 @@ def owner_required(view):
     return wrapped_view
 
 
+def backup_function(func):
+    @wraps(func)
+    def wrapped_backup(*args, **kwargs):
+        import shutil
+
+        shutil.copy2("instance/projects.db", "instance/backup.db")
+        return func(*args, **kwargs)
+
+    return wrapped_backup
+
+
 @app.route("/login", methods=["GET", "POST"])
 @limiter.limit("5 per minute", methods=["POST"])
 def login():
@@ -180,11 +191,12 @@ def index():
     return render_template("index.html", projects=projects)
 
 
-@app.route("/projects/new", methods=["GET", "POST"])
+@app.route("/projects/new", methods=["POST"])
 @login_required
 @owner_required
+@backup_function
 def add_project():
-    """Render new project form html."""
+    """create a new project in the sqlite3 db"""
     if request.method == "POST":
         year_and_month = request.form.get("date")
         # model takes datetimeobject in column
@@ -202,6 +214,12 @@ def add_project():
         db.session.add(new_project)
         db.session.commit()
         return redirect(url_for("index"))
+
+
+@app.route("/projects/new", methods=["GET"])
+@login_required
+@owner_required
+def new_project():
     return render_template("projectform.html")
 
 
@@ -215,6 +233,7 @@ def project_detail(project_id):
 @app.route("/projects/<int:project_id>/edit", methods=["GET", "POST"])
 @login_required
 @owner_required
+@backup_function
 def project_edit(project_id):
     """Render edition page with same conventions from add project."""
     project = Project.query.get_or_404(project_id)
@@ -235,6 +254,7 @@ def project_edit(project_id):
 @app.route("/projects/<int:project_id>/delete", methods=["POST"])
 @login_required
 @owner_required
+@backup_function
 def project_delete(project_id):
     """Delete project from db and redirect to home."""
     project = Project.query.get_or_404(project_id)
@@ -245,14 +265,14 @@ def project_delete(project_id):
 
 @app.route("/about")
 def about():
-    """About page."""
+    """About route"""
     projects = Project.query.all()
     return render_template("about.html", projects=projects)
 
 
 @app.route("/technologies")
 def technologies():
-    """Tech-Stack"""
+    """Tech-Stack route"""
     projects = Project.query.all()
     return render_template("technologies.html", projects=projects)
 
