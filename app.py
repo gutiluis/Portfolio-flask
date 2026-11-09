@@ -343,13 +343,15 @@ def contact():
 @app.route("/privacy_policy")
 def privacy_policy():
     """copyrights policy"""
-    return render_template("privacy_policy.html")
+    projects = Project.query.all()
+    return render_template("privacy_policy.html", projects=projects)
 
 
 @app.route("/terms_of_use")
 def terms_of_use():
     """terms and conditions"""
-    return render_template("terms_of_use.html")
+    projects = Project.query.all()
+    return render_template("terms_of_use.html", projects=projects)
 
 
 @app.errorhandler(404)
