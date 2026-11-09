@@ -160,6 +160,28 @@
                 </a>
             </div>
 
+            <section id="legal" class="mt-6">
+                <h2 class="mb-2 text-sm font-semibold text-green-400">
+                    Legal
+                </h2>
+                <nav aria-label="Legal">
+                    <ul class="flex justify-center gap-6 text-sm">
+                        <li>
+                            <a href="{{ url_for('privacy_policy') }}"
+                                class="text-green-400 transition-colors hover:text-green-200">
+                                Privacy Policy
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('terms_of_use') }}"
+                                class="text-green-400 transition-colors hover:text-green-200">
+                                Terms of Use
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </section>
+
             <script>
                 document.getElementById("year").textContent =
                     new Date().getFullYear();

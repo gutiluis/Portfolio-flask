@@ -340,6 +340,18 @@ def contact():
     return render_template("contact.html", projects=projects)
 
 
+@app.route("/privacy_policy")
+def privacy_policy():
+    """copyrights policy"""
+    return render_template("privacy_policy.html")
+
+
+@app.route("/terms_of_use")
+def terms_of_use():
+    """terms and conditions"""
+    return render_template("terms_of_use.html")
+
+
 @app.errorhandler(404)
 def not_found(error):
     """Render custom page not found error."""
