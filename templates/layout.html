@@ -137,50 +137,96 @@
             {% block content %}{% endblock %}
         </main>
 
-        <footer id="footer" class="border-t border-green-900 px-6 py-6 text-center">
 
-            <p>
-                Copyright &copy; <span id="year"></span> technobool by LG.
-            </p>
+        <footer id="footer" class="border-t border-green-900 px-6 py-10">
 
-            <div class="mt-4 flex justify-center gap-6">
-                <a href="https://github.com/gutiluis" aria-label="GitHub"
-                    class="text-green-400 transition-colors hover:text-green-200">
-                    <i class="fa-brands fa-github text-2xl"></i>
-                </a>
+            <div class="mx-auto grid max-w-6xl grid-cols-1 gap-10 text-center sm:grid-cols-3 sm:text-left">
 
-                <a href="https://discord.gg/ExgJQhbqhH" aria-label="Discord"
-                    class="text-green-400 transition-colors hover:text-green-200">
-                    <i class="fa-brands fa-discord text-2xl"></i>
-                </a>
+                <section id="quicklinks" class="sm:col-start-1">
+                    <h2 class="mb-4 font-semibold text-green-400">
+                        Quick Links
+                    </h2>
+                    <nav aria-label="Quick Links">
+                        <ul class="space-y-3 text-sm">
+                            <li>
+                                <a href="{{ url_for('index') }}"
+                                    class="text-green-400 transition-colors hover:text-green-200">
+                                    Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('about') }}"
+                                    class="text-green-400 transition-colors hover:text-green-200">
+                                    About
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('contact') }}"
+                                    class="text-green-400 transition-colors hover:text-green-200">
+                                    Contact
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </section>
 
-                <a href="https://technobool.slack.com" aria-label="Slack"
-                    class="text-green-400 transition-colors hover:text-green-200">
-                    <i class="fa-brands fa-slack text-2xl"></i>
-                </a>
+                <section id="social-media" class="sm:col-start-2 sm:text-center">
+                    <h2 class="mb-4 font-semibold text-green-400">
+                        Social Media
+                    </h2>
+                    <nav aria-label="Social Media">
+                        <ul class="flex justify-center gap-6">
+                            <li>
+                                <a href="https://github.com/gutiluis" aria-label="GitHub"
+                                    class="text-green-400 transition-colors hover:text-green-200">
+                                    <i class="fa-brands fa-github text-2xl"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://discord.gg/ExgJQhbqhH" aria-label="Discord"
+                                    class="text-green-400 transition-colors hover:text-green-200">
+                                    <i class="fa-brands fa-discord text-2xl"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://technobool.slack.com" aria-label="Slack"
+                                    class="text-green-400 transition-colors hover:text-green-200">
+                                    <i class="fa-brands fa-slack text-2xl"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </section>
+
+                <section id="legal" class="sm:col-start-3 sm:text-right">
+                    <h2 class="mb-4 font-semibold text-green-400">
+                        Legal
+                    </h2>
+                    <nav aria-label="Legal">
+                        <ul class="space-y-3 text-sm">
+                            <li>
+                                <a href="{{ url_for('privacy_policy') }}"
+                                    class="text-green-400 transition-colors hover:text-green-200">
+                                    Privacy Policy
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('terms_of_use') }}"
+                                    class="text-green-400 transition-colors hover:text-green-200">
+                                    Terms of Use
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </section>
+
             </div>
 
-            <section id="legal" class="mt-6">
-                <h2 class="mb-2 text-sm font-semibold text-green-400">
-                    Legal
-                </h2>
-                <nav aria-label="Legal">
-                    <ul class="flex justify-center gap-6 text-sm">
-                        <li>
-                            <a href="{{ url_for('privacy_policy') }}"
-                                class="text-green-400 transition-colors hover:text-green-200">
-                                Privacy Policy
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ url_for('terms_of_use') }}"
-                                class="text-green-400 transition-colors hover:text-green-200">
-                                Terms of Use
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </section>
+            <div class="mx-auto mt-10 max-w-6xl border-t border-green-900 pt-6 text-center text-sm sm:text-left">
+                <p>
+                    Copyright &copy; <span id="year"></span> technobool by LG.
+                </p>
+            </div>
 
             <script>
                 document.getElementById("year").textContent =
@@ -188,7 +234,6 @@
             </script>
 
         </footer>
-
     </div>
 </body>
 
