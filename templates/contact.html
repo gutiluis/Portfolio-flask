@@ -1,33 +1,45 @@
-{% extends "layout.html" %} {% block content %}
+{% extends "layout.html" %}
+
+{% block content %}
 <section class="mx-auto max-w-3xl px-6 py-12">
+
     <header class="mb-10">
         <h1 class="text-4xl font-bold text-green-400">Contact</h1>
         <p class="mt-3 text-gray-400">
             Have a question or project in mind? Send me a message.
         </p>
     </header>
+
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% for category, message in messages %}
-    <div class="mb-6 rounded-lg border border-green-900 p-4
-                                text-green-400" role="alert">
+    <div class="mb-6 rounded-lg border p-4
+                {% if category == 'success' %}
+                    border-green-500 text-green-400
+                {% else %}
+                    border-red-500 text-red-400
+                {% endif %}" role="alert">
         {{ message }}
     </div>
     {% endfor %}
     {% endwith %}
 
     <form method="POST" action="{{ url_for('contact') }}" class="space-y-6">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
         <div>
-            <label for="name" class="mb-2 block text-green-400"> Name </label>
-            <input id="name" name="name" type="text" maxlength="100" required
-                class="w-full rounded-lg border border-green-900 bg-black p-3 text-green-400 focus:border-green-400 focus:outline-none" />
+            <label for="name" class="mb-2 block text-green-400">
+                Name
+            </label>
+            <input id="name" name="name" type="text" maxlength="100" autocomplete="name" required
+                class="w-full rounded-lg border border-green-900 bg-black p-3 text-green-400 focus:border-green-400 focus:outline-none focus:ring-1 focus:ring-green-400">
         </div>
 
         <div>
-            <label for="email" class="mb-2 block text-green-400"> Email </label>
-            <input id="email" name="email" type="email" maxlength="254" required
-                class="w-full rounded-lg border border-green-900 bg-black p-3 text-green-400 focus:border-green-400 focus:outline-none" />
+            <label for="email" class="mb-2 block text-green-400">
+                Email
+            </label>
+            <input id="email" name="email" type="email" maxlength="254" autocomplete="email" required
+                class="w-full rounded-lg border border-green-900 bg-black p-3 text-green-400 focus:border-green-400 focus:outline-none focus:ring-1 focus:ring-green-400">
         </div>
 
         <div>
@@ -35,7 +47,23 @@
                 Subject
             </label>
             <input id="subject" name="subject" type="text" maxlength="150" required
-                class="w-full rounded-lg border border-green-900 bg-black p-3 text-green-400 focus:border-green-400 focus:outline-none" />
+                class="w-full rounded-lg border border-green-900 bg-black p-3 text-green-400 focus:border-green-400 focus:outline-none focus:ring-1 focus:ring-green-400">
+        </div>
+
+        <div>
+            <label for="country" class="mb-2 block text-green-400">
+                Country
+            </label>
+            <input id="country" name="country" type="text" maxlength="50" autocomplete="country-name" required
+                class="w-full rounded-lg border border-green-900 bg-black p-3 text-green-400 focus:border-green-400 focus:outline-none focus:ring-1 focus:ring-green-400">
+        </div>
+
+        <div>
+            <label for="phone" class="mb-2 block text-green-400">
+                Telephone
+            </label>
+            <input id="phone" name="phone" type="tel" maxlength="30" autocomplete="tel"
+                class="w-full rounded-lg border border-green-900 bg-black p-3 text-green-400 focus:border-green-400 focus:outline-none focus:ring-1 focus:ring-green-400">
         </div>
 
         <div>
@@ -43,13 +71,14 @@
                 Message
             </label>
             <textarea id="message" name="message" rows="6" maxlength="5000" required
-                class="w-full rounded-lg border border-green-900 bg-black p-3 text-green-400 focus:border-green-400 focus:outline-none"></textarea>
+                class="w-full rounded-lg border border-green-900 bg-black p-3 text-green-400 focus:border-green-400 focus:outline-none focus:ring-1 focus:ring-green-400"></textarea>
         </div>
 
         <button type="submit"
-            class="rounded-lg border border-green-500 px-6 py-3 font-semibold text-green-400 transition hover:bg-green-500 hover:text-black">
+            class="rounded-lg border border-green-500 px-6 py-3 font-semibold text-green-400 transition hover:bg-green-500 hover:text-black focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-black">
             Send Message
         </button>
+
     </form>
 </section>
 {% endblock %}

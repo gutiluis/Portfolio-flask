@@ -292,14 +292,16 @@ def technologies():
 @app.route("/contact", methods=["GET", "POST"])
 @limiter.limit("5 per minute", methods=["POST"])
 def contact():
-    """Send email to youself"""
+    """Send email"""
     if request.method == "POST":
         name = request.form.get("name", "").strip()
         sender_email = request.form.get("email", "").strip()
         subject = request.form.get("subject", "").strip()
+        country = request.form.get("country", "").strip()
+        phone = request.form.get("phone", "").strip()
         message = request.form.get("message", "").strip()
 
-        if not all([name, sender_email, subject, message]):
+        if not all([name, sender_email, subject, country, message]):
             flash("All fields are required.", "error")
             return redirect(url_for("contact"))
 
@@ -311,9 +313,19 @@ def contact():
             len(name) > 100
             or len(sender_email) > 254
             or len(subject) > 150
+            or len(country) > 50
+            or len(phone) > 30
             or len(message) > 5000
         ):
             flash("One or more fields exceed the allowed length.", "error")
+            return redirect(url_for("contact"))
+
+        if "\r" in subject or "\n" in subject:
+            flash("Invalid subject.", "error")
+            return redirect(url_for("contact"))
+
+        if phone and not re.fullmatch(r"(?=.*\d)[+\d().\-\s]{1,30}", phone):
+            flash("Please enter a valid telephone number.", "error")
             return redirect(url_for("contact"))
 
         contact_email = app.config.get("CONTACT_EMAIL")
@@ -325,7 +337,13 @@ def contact():
             subject=f"Portfolio contact: {subject}",
             recipients=[contact_email],
             reply_to=sender_email,
-            body=(f"Name: {name}\nEmail: {sender_email}\n\nMessage:\n{message}"),
+            body=(
+                f"Name: {name}\n"
+                f"Email: {sender_email}\n"
+                f"Country: {country}\n"
+                f"Telephone: {phone or 'Not provided'}\n\n"
+                f"Message:\n{message}",
+            ),
         )
 
         try:
