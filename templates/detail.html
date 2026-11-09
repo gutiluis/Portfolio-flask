@@ -8,17 +8,13 @@
             {{ project.title }}
         </h1>
 
-        <p class="mb-6 text-sm text-gray-400">
-            {{ project.created.strftime('%Y-%m') }}
-        </p>
-
         <a href="{{ project.github_repo }}" target="_blank" rel="noopener noreferrer"
             class="inline-flex items-center gap-2 rounded-md border border-green-500 px-5 py-2.5 font-semibold text-green-400 transition hover:bg-green-500 hover:text-black">
             <i class="fab fa-github" aria-hidden="true"></i>
             View on GitHub
         </a>
 
-        <ul class="mt-6 flex flex-wrap gap-2">
+        <ul class="mt-6 flex flex-wrap justify-center gap-2">
             <li class="rounded-md bg-gray-800 px-3 py-1.5 text-sm text-green-400">
                 {{ project.technologies }}
             </li>
