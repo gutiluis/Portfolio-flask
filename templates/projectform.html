@@ -9,14 +9,28 @@
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <label for="title">Project Title</label>
         <input type="text" name="title" id="title" placeholder="Project Name" required>
+
         <label for="date">Completion Date</label>
         <input type="month" name="date" id="date" placeholder="YYYY-MM" required>
+
+        <label for="category">Category</label>
+        <input type="text" name="category" id="category"
+            class="block w-full border border-green-400 bg-black p-3 text-green-400"
+            placeholder="e.g. Gaming, Sports, Business" required>
+
+        <label for="summary">Summary</label>
+        <textarea name="summary" id="summary" rows="3"
+            class="block w-full border border-green-400 bg-black p-3 text-green-400"
+            placeholder="Brief description of the project" required></textarea>
+
         <label for="description">Description</label>
         <textarea name="desc" id="description" cols="30" rows="20" placeholder="Description" required></textarea>
+
         <label for="technologies-list" id="technologies-label">Technologies</label>
         <p>Separate each technology by a comma</p>
         <textarea name="technologies" id="technologies-list" cols="30" rows="10" placeholder="Technology, Technology"
             required></textarea>
+
         <label for="github">GitHub Link</label>
         <input type="url" name="github" id="github" placeholder="Link to the repo" required>
         <div>

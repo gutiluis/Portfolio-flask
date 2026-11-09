@@ -4,13 +4,25 @@
 <section class="header">
     <h1>Edit Project</h1>
 </section>
+
 <section id="form">
     <form action="{{ url_for('project_edit', project_id=project.id) }}" method="POST">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
         <label for="title">Project Title</label>
         <input type="text" name="title" id="title"
             class="block w-full border border-green-400 bg-black p-3 text-green-400" placeholder="Project Name"
             value="{{ project.title }}" required>
+
+        <label for="category">Category</label>
+        <input type="text" name="category" id="category"
+            class="block w-full border border-green-400 bg-black p-3 text-green-400"
+            placeholder="e.g. Gaming, Sports, Business" value="{{ project.category or '' }}" required>
+
+        <label for="summary">Summary</label>
+        <textarea name="summary" id="summary" rows="3"
+            class="block w-full border border-green-400 bg-black p-3 text-green-400"
+            placeholder="Brief description of the project" required>{{ project.summary or '' }}</textarea>
 
         <label for="date">Completion Date</label>
         <input type="month" name="date" id="date"
@@ -31,7 +43,7 @@
         <label for="github">GitHub Link</label>
         <input type="url" name="github" id="github"
             class="block w-full border border-green-400 bg-black p-3 text-green-400" placeholder="Link to the repo"
-            value="{{ project.github_repo }}">
+            value="{{ project.github_repo or '' }}">
 
         <div>
             <button type="reset">Cancel</button>

@@ -208,6 +208,8 @@ def add_project():
             created=convert_string,
             description=request.form.get("desc"),
             technologies=request.form.get("technologies"),
+            category=request.form.get("category"),
+            summary=request.form.get("summary"),
             github_repo=request.form.get("github"),
         )
 
@@ -245,6 +247,8 @@ def project_edit(project_id):
     project.created = convert_string
     project.description = request.form.get("desc")
     project.technologies = request.form.get("technologies")
+    project.category = request.form.get("category")
+    project.summary = request.form.get("summary")
     project.github_repo = request.form.get("github")
     db.session.commit()
     return redirect(url_for("index"))
