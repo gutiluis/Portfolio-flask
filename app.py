@@ -323,8 +323,8 @@ def contact():
             flash("Unable to send your message. Please try again later.", "error")
 
         return redirect(url_for("contact"))
-
-    return render_template("contact.html")
+    projects = Project.query.all()
+    return render_template("contact.html", projects=projects)
 
 
 @app.errorhandler(404)
