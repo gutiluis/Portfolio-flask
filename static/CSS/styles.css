@@ -398,6 +398,9 @@
   .border-gray-700 {
     border-color: var(--color-gray-700);
   }
+  .border-green-400 {
+    border-color: var(--color-green-400);
+  }
   .border-green-500 {
     border-color: var(--color-green-500);
   }

@@ -223,32 +223,40 @@ def new_project():
     return render_template("projectform.html")
 
 
-@app.route("/projects/<int:project_id>")
+@app.route("/projects/<int:project_id>", methods=["GET"])
 def project_detail(project_id):
     """Render detail per project id."""
     project = Project.query.get_or_404(project_id)
-    return render_template("detail.html", project=project)
+    projects = Project.query.all()
+    return render_template("detail.html", project=project, projects=projects)
 
 
-@app.route("/projects/<int:project_id>/edit", methods=["GET", "POST"])
+@app.route("/projects/<int:project_id>/edit", methods=["POST"])
 @login_required
 @owner_required
 @backup_function
 def project_edit(project_id):
     """Render edition page with same conventions from add project."""
     project = Project.query.get_or_404(project_id)
-    if request.method == "POST":
-        year_and_month = request.form.get("date")
-        convert_string = datetime.strptime(year_and_month, "%Y-%m").date()
+    year_and_month = request.form.get("date")
+    convert_string = datetime.strptime(year_and_month, "%Y-%m").date()
 
-        project.title = request.form.get("title")
-        project.created = convert_string
-        project.description = request.form.get("desc")
-        project.technologies = request.form.get("technologies")
-        project.github_repo = request.form.get("github")
-        db.session.commit()
-        return redirect(url_for("index"))
-    return render_template("editform.html", project=project)
+    project.title = request.form.get("title")
+    project.created = convert_string
+    project.description = request.form.get("desc")
+    project.technologies = request.form.get("technologies")
+    project.github_repo = request.form.get("github")
+    db.session.commit()
+    return redirect(url_for("index"))
+
+
+@app.route("/projects/<int:project_id>/edit", methods=["GET"])
+@login_required
+@owner_required
+def get_project(project_id):
+    project = Project.query.get_or_404(project_id)
+    projects = Project.query.all()
+    return render_template("editform.html", project=project, projects=projects)
 
 
 @app.route("/projects/<int:project_id>/delete", methods=["POST"])
@@ -280,6 +288,7 @@ def technologies():
 @app.route("/contact", methods=["GET", "POST"])
 @limiter.limit("5 per minute", methods=["POST"])
 def contact():
+    """Send email to youself"""
     if request.method == "POST":
         name = request.form.get("name", "").strip()
         sender_email = request.form.get("email", "").strip()
