@@ -45,7 +45,7 @@ class User(UserMixin, db.Model):
 
 
 class Project(db.Model):
-    """SQLAlchemy model"""
+    """Project base model"""
 
     __tablename__ = "projects"
     # primary_key is implicitly nullable=False
@@ -54,10 +54,10 @@ class Project(db.Model):
     created: Mapped[datetime.date] = mapped_column(Date, nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False)
     technologies: Mapped[str] = mapped_column(Text, nullable=False)
+    category: Mapped[str] = mapped_column(String, nullable=True)
+    summary: Mapped[str] = mapped_column(String, nullable=True)
     github_repo: Mapped[str] = mapped_column(Text, unique=True, nullable=False)
 
     def __repr__(self):
-        return f"""<Project (Title: {self.title}
-                Description: {self.description}
-                technologies: {self.technologies}
-                Github: {self.github_repo})"""
+        # uses !r to display the string representation of each value
+        return f"<Project(title={self.title!r}, category={self.category!r})>"

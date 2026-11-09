@@ -28,6 +28,11 @@
             {% for project in projects %}
             <article
                 class="rounded-lg border border-gray-700 bg-gray-900 p-6 text-center transition hover:border-green-500">
+
+                <p class="mb-3 text-sm font-medium uppercase tracking-wide text-green-500">
+                    {{ project.category }}
+                </p>
+
                 <h3 class="mb-3 text-xl font-semibold">
                     <a href="{{ url_for('project_detail', project_id=project.id) }}"
                         class="text-green-400 hover:text-green-300">
@@ -36,7 +41,7 @@
                 </h3>
 
                 <p class="leading-relaxed text-gray-300">
-                    {{ project.description }}
+                    {{ project.summary }}
                 </p>
             </article>
             {% else %}
