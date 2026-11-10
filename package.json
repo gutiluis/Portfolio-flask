@@ -4,8 +4,8 @@
     "description": "> [!WARNING] > CURRENTLY UNDER DEVELOPMENT",
     "main": "index.js",
     "scripts": {
-        "build": "npx @tailwindcss/cli -i ./static/src/input.css -o ./static/CSS/styles.css",
-        "watch": "npx @tailwindcss/cli -i ./static/src/input.css -o ./static/CSS/styles.css --watch",
+        "build": "tailwindcss -i ./static/src/input.css -o ./static/CSS/styles.css",
+        "watch": "tailwindcss -i ./static/src/input.css -o ./static/CSS/styles.css --watch",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {

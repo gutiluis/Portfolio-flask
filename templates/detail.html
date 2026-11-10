@@ -29,6 +29,16 @@
         </p>
     </section>
 
+    {% if project.title == "Guessing Number" %}
+    <section id="play-game" class="mb-12">
+        <h2 class="mb-5 text-2xl font-bold">Play the Game</h2>
+
+        <iframe src="{{ url_for('static', filename='games/guessing-number/index.html') }}"
+            title="Guessing Number Game - JavaScript Version"
+            class="h-[600px] w-full rounded-lg border border-green-700 bg-black"></iframe>
+    </section>
+    {% endif %}
+
     {% if current_user.is_authenticated and current_user.is_owner %}
     <section id="edit-delete" class="flex flex-wrap gap-4 border-t border-gray-700 pt-6">
         <a href="{{ url_for('project_edit', project_id=project.id) }}"
