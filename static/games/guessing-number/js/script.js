@@ -1,3 +1,4 @@
+// html element DOM references
 const startForm = document.querySelector("#start-form");
 const guessForm = document.querySelector("#guess-form");
 const restartButton = document.querySelector("#restart-button");
@@ -11,12 +12,38 @@ const guessInput = document.querySelector("#guess");
 const welcomeMessage = document.querySelector("#welcome-message");
 const feedback = document.querySelector("#feedback");
 const attemptsDisplay = document.querySelector("#attempts");
+const scoresList = document.getElementById("scores-list");
+const scoresSection = document.getElementById("scores-section");
 const MAX_ATTEMPTS = 5;
 
-let playerName = "";
+// player name local storage key
+let playerName = localStorage.getItem("playerName") || "";
 let secretNumber = 0;
 let attempts = 0;
 let gameOver = false;
+
+function saveScore(playerName, attempts) {
+    const scores = JSON.parse(
+        localStorage.getItem("guessingGameScores") || "[]",
+    );
+    const existingScore = scores.find(
+        (score) => score.playerName.toLowerCase() === playerName.toLowerCase(),
+    );
+
+    if (existingScore) {
+        if (attempts < existingScore.attempts) {
+            existingScore.attempts = attempts;
+            existingScore.date = newDate().toISOString();
+        }
+    } else {
+        scores.push({
+            playerName,
+            attempts,
+            date: new Date().toISOString(),
+        });
+    }
+    localStorage.setItem("gussingGameScores", JSON.stringify(scores));
+}
 
 function startGame() {
     secretNumber = Math.floor(Math.random() * 10) + 1;
@@ -26,6 +53,7 @@ function startGame() {
     attemptsDisplay.textContent = attempts;
     feedback.textContent = "Make your first guess!";
     welcomeMessage.textContent = `Good luck, ${playerName}!`;
+    localStorage.setItem("playerName", playerName);
 
     guessInput.value = "";
     guessInput.disabled = false;
@@ -33,8 +61,27 @@ function startGame() {
 
     startSection.hidden = true;
     gameSection.hidden = false;
+    guessInput.hidden = false;
 
     guessInput.focus();
+}
+
+function displayScores() {
+    const scores = JSON.parse(
+        localStorage.getItem("guessingGameScores") || "[]",
+    );
+
+    scoresSection.hidden = scores.length === 0;
+    scoresList.innerHTML = "";
+    if (scores.length === 0) {
+        scoresList.textContent = "No scores available yet.";
+        return;
+    }
+    scores.forEach((score) => {
+        const li = document.createElement("li");
+        li.textContent = `${score.playerName} - ${score.attempts} attempts`;
+        scoresList.appendChild(li);
+    });
 }
 
 function checkGuess(guess) {
@@ -50,6 +97,8 @@ function checkGuess(guess) {
 
     if (guess === secretNumber) {
         feedback.textContent = `Congratulations, ${playerName}! You guessed it in ${attempts} attempts.`;
+        saveScore(playerName, attempts);
+        displayScores();
 
         gameOver = true;
         guessInput.disabled = true;
@@ -67,7 +116,8 @@ function checkGuess(guess) {
 
     if (attempts >= MAX_ATTEMPTS && guess !== secretNumber) {
         feedback.textContent = `Game over! The number was ${secretNumber}.`;
-        guessButton.disabled = true;
+        restartButton.hidden = false;
+        guessInput.hidden = true;
     }
 }
 
@@ -88,3 +138,6 @@ guessForm.addEventListener("submit", (event) => {
 });
 
 restartButton.addEventListener("click", startGame);
+
+// previously saved scores appear when the game page first loads. and after DOM references and event listeners are initialized
+displayScores();

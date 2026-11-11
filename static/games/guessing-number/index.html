@@ -47,7 +47,7 @@
                         placeholder="1–10"
                         required
                     />
-                    <button type="submit">Guess</button>
+                    <button id="guess-button" type="submit">Guess</button>
                 </form>
 
                 <p id="feedback" role="status" aria-live="polite">
@@ -59,6 +59,11 @@
                 <button type="button" id="restart-button" hidden>
                     Play Again
                 </button>
+            </section>
+
+            <section id="scores-section" hidden>
+                <h2>Scores</h2>
+                <ul id="scores-list"></ul>
             </section>
         </main>
     </body>
