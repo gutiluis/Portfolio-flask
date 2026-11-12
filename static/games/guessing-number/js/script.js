@@ -14,6 +14,7 @@ const feedback = document.querySelector("#feedback");
 const attemptsDisplay = document.querySelector("#attempts");
 const scoresList = document.getElementById("scores-list");
 const scoresSection = document.getElementById("scores-section");
+const scores = [];
 const MAX_ATTEMPTS = 5;
 
 // player name local storage key
@@ -22,27 +23,18 @@ let secretNumber = 0;
 let attempts = 0;
 let gameOver = false;
 
+// dissapear iframe memory management garbage collector references. instead of window.localStorage
 function saveScore(playerName, attempts) {
-    const scores = JSON.parse(
-        localStorage.getItem("guessingGameScores") || "[]",
-    );
     const existingScore = scores.find(
         (score) => score.playerName.toLowerCase() === playerName.toLowerCase(),
     );
-
     if (existingScore) {
         if (attempts < existingScore.attempts) {
             existingScore.attempts = attempts;
-            existingScore.date = newDate().toISOString();
         }
     } else {
-        scores.push({
-            playerName,
-            attempts,
-            date: new Date().toISOString(),
-        });
+        scores.push({ playerName, attempts });
     }
-    localStorage.setItem("gussingGameScores", JSON.stringify(scores));
 }
 
 function startGame() {
@@ -67,16 +59,14 @@ function startGame() {
 }
 
 function displayScores() {
-    const scores = JSON.parse(
-        localStorage.getItem("guessingGameScores") || "[]",
-    );
-
     scoresSection.hidden = scores.length === 0;
     scoresList.innerHTML = "";
+
     if (scores.length === 0) {
         scoresList.textContent = "No scores available yet.";
         return;
     }
+
     scores.forEach((score) => {
         const li = document.createElement("li");
         li.textContent = `${score.playerName} - ${score.attempts} attempts`;
@@ -138,6 +128,4 @@ guessForm.addEventListener("submit", (event) => {
 });
 
 restartButton.addEventListener("click", startGame);
-
-// previously saved scores appear when the game page first loads. and after DOM references and event listeners are initialized
 displayScores();
