@@ -1,7 +1,7 @@
 const canvas = document.querySelector("#matrix");
 const ctx = canvas.getContext("2d");
 
-const characters = "アイウエオカキクケコ0123456789";
+const characters = "アイウエオカキクケコ0123456789:=+-<>*.|^_";
 const fontSize = 16;
 
 let columns;
