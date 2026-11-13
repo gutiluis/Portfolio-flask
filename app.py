@@ -4,7 +4,7 @@
 
 from dotenv import load_dotenv
 from datetime import datetime
-from flask import render_template, url_for, request, redirect, abort, flash
+from flask import render_template, url_for, request, redirect, abort, flash, jsonify
 from flask_login import (
     login_required,
     current_user,
@@ -19,7 +19,7 @@ from flask_limiter.util import get_remote_address
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired, BadSignature
 from functools import wraps
 from flask_migrate import Migrate
-from models import db, Project, app, User, mail
+from models import db, Project, app, User, mail, Score
 from sqlalchemy import or_
 import os
 import re

@@ -1,6 +1,6 @@
 # file: models.py
 
-"""SQLAlchemy ORM models"""
+"""admin user model, querying projects model, gaming scores model"""
 
 import datetime
 import os
@@ -8,7 +8,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import Text, String, Date
+from sqlalchemy import Text, String, Date, Integer
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -61,3 +61,12 @@ class Project(db.Model):
     def __repr__(self):
         # uses !r to display the string representation of each value
         return f"<Project(title={self.title!r}, category={self.category!r})>"
+
+
+class Score(db.Model):
+    """Scores persistency"""
+
+    __tablename__ = "scores"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    player_name: Mapped[str] = mapped_column(String, unique=True, nullable=False)
+    attempts: Mapped[int] = mapped_column(Integer, nullable=False)
