@@ -284,7 +284,7 @@ def submit_score():
     player_name = data.get("player_name")
     attempts = data.get("attempts")
     if not isinstance(player_name, str) or not player_name.strip():
-        return jsonify({"error": "Invalid player name"}). 400
+        return jsonify({"error": "Invalid player name"}), 400
     player_name = player_name.strip()
     if len(player_name) > 30:
         return jsonify({"error": "Player name must be 30 characters or fewer"}), 400
@@ -302,27 +302,33 @@ def submit_score():
             attempts=attempts,
         )
         db.session.add(score)
-        return jsonify({
-            "player_name": score.player_name,
-            "attempts": score.attempts,
-        }), 200
+        return jsonify(
+            {
+                "player_name": score.player_name,
+                "attempts": score.attempts,
+            }
+        ), 200
 
 
 @app.route("/api/leaderboard", methods=["GET"])
 def get_leaderboard():
-    scores = db.session.execute(
-        db.select(Score)
-        .order_by(Score.attempts.asc(), Score.id.asc())
-        .limit(10)
-    ).scalars().all()
+    scores = (
+        db.session.execute(
+            db.select(Score).order_by(Score.attempts.asc(), Score.id.asc()).limit(10)
+        )
+        .scalars()
+        .all()
+    )
 
-    return jsonify([
-        {
-            "player_name": score.player_name,
-            "attempts": score.attempts,
-        }
-        for score in scores
-    ])
+    return jsonify(
+        [
+            {
+                "player_name": score.player_name,
+                "attempts": score.attempts,
+            }
+            for score in scores
+        ]
+    )
 
 
 @app.route("/about")
