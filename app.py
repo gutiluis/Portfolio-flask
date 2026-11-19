@@ -275,9 +275,59 @@ def project_delete(project_id):
     return redirect(url_for("index"))
 
 
+@app.route("/api/scores", methods=["POST"])
+@limiter.limit("10 per minute")
+def submit_score():
+    data = request.get_json(silent=True)
+    if not isinstance(data, dict):
+        return jsonify({"error": "Invalid JSON"}), 400
+    player_name = data.get("player_name")
+    attempts = data.get("attempts")
+    if not isinstance(player_name, str) or not player_name.strip():
+        return jsonify({"error": "Invalid player name"}). 400
+    player_name = player_name.strip()
+    if len(player_name) > 30:
+        return jsonify({"error": "Player name must be 30 characters or fewer"}), 400
+    if type(attempts) is not int or attempts < 1:
+        return jsonify({"error": "Attempts must be a positive integer"}), 400
+    score = db.session.execute(
+        db.select(Score).where(Score.player_name == player_name)
+    ).scalar_one_or_none()
+    if score:
+        if attempts < score.attempts:
+            score.attempts = attempts
+    else:
+        score = Score(
+            player_name=player_name,
+            attempts=attempts,
+        )
+        db.session.add(score)
+        return jsonify({
+            "player_name": score.player_name,
+            "attempts": score.attempts,
+        }), 200
+
+
+@app.route("/api/leaderboard", methods=["GET"])
+def get_leaderboard():
+    scores = db.session.execute(
+        db.select(Score)
+        .order_by(Score.attempts.asc(), Score.id.asc())
+        .limit(10)
+    ).scalars().all()
+
+    return jsonify([
+        {
+            "player_name": score.player_name,
+            "attempts": score.attempts,
+        }
+        for score in scores
+    ])
+
+
 @app.route("/about")
 def about():
-    """About route"""
+    """About the site"""
     projects = Project.query.all()
     return render_template("about.html", projects=projects)
 
