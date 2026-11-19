@@ -11,3 +11,6 @@ projects.db
 instance/
 instance/projects.db
 instance/projects.db.bak
+*.db
+*.db-*
+*.db.bak

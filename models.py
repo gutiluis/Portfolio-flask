@@ -64,7 +64,7 @@ class Project(db.Model):
 
 
 class Score(db.Model):
-    """Scores persistency"""
+    """Global scores persistency"""
 
     __tablename__ = "scores"
     id: Mapped[int] = mapped_column(primary_key=True)
