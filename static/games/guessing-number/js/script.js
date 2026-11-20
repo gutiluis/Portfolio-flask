@@ -87,22 +87,6 @@ function startGame() {
     guessInput.focus();
 }
 
-function displayScores() {
-    scoresSection.hidden = scores.length === 0;
-    scoresList.innerHTML = "";
-
-    if (scores.length === 0) {
-        scoresList.textContent = "No scores available yet.";
-        return;
-    }
-
-    scores.forEach((score) => {
-        const li = document.createElement("li");
-        li.textContent = `${score.playerName} - ${score.attempts} attempts`;
-        scoresList.appendChild(li);
-    });
-}
-
 async function checkGuess(guess) {
     if (gameOver) return;
 
