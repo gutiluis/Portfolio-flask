@@ -279,20 +279,28 @@ def project_delete(project_id):
 @limiter.limit("10 per minute")
 def submit_score():
     data = request.get_json(silent=True)
+
     if not isinstance(data, dict):
         return jsonify({"error": "Invalid JSON"}), 400
+
     player_name = data.get("player_name")
     attempts = data.get("attempts")
+
     if not isinstance(player_name, str) or not player_name.strip():
         return jsonify({"error": "Invalid player name"}), 400
+
     player_name = player_name.strip()
-    if len(player_name) > 30:
-        return jsonify({"error": "Player name must be 30 characters or fewer"}), 400
+
+    if len(player_name) > 10:
+        return jsonify({"error": "Player name must be 10 characters or fewer"}), 400
+
     if type(attempts) is not int or attempts < 1:
         return jsonify({"error": "Attempts must be a positive integer"}), 400
+
     score = db.session.execute(
         db.select(Score).where(Score.player_name == player_name)
     ).scalar_one_or_none()
+
     if score:
         if attempts < score.attempts:
             score.attempts = attempts
@@ -302,6 +310,8 @@ def submit_score():
             attempts=attempts,
         )
         db.session.add(score)
+    db.session.commit()
+
         return jsonify(
             {
                 "player_name": score.player_name,
