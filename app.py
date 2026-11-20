@@ -312,12 +312,12 @@ def submit_score():
         db.session.add(score)
     db.session.commit()
 
-        return jsonify(
-            {
-                "player_name": score.player_name,
-                "attempts": score.attempts,
-            }
-        ), 200
+    return jsonify(
+        {
+            "player_name": score.player_name,
+            "attempts": score.attempts,
+        }
+    ), 200
 
 
 @app.route("/api/leaderboard", methods=["GET"])
