@@ -63,6 +63,7 @@ async function displayScores() {
         });
     } catch (error) {
         console.error("Leaderboard error:", error);
+    }
 }
 
 function startGame() {
