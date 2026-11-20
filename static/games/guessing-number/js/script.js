@@ -24,17 +24,45 @@ let attempts = 0;
 let gameOver = false;
 
 // dissapear iframe memory management garbage collector references. instead of window.localStorage
-function saveScore(playerName, attempts) {
-    const existingScore = scores.find(
-        (score) => score.playerName.toLowerCase() === playerName.toLowerCase(),
-    );
-    if (existingScore) {
-        if (attempts < existingScore.attempts) {
-            existingScore.attempts = attempts;
+async function saveScore(playerName, attempts) {
+    try {
+        const response = await fetch("/api/scores", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                player_name: playerName,
+                attempts: attempts,
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to save score");
         }
-    } else {
-        scores.push({ playerName, attempts });
+        await displayScores();
+    } catch (error) {
+        console.error("Score submission error:", error);
     }
+}
+async function displayScores() {
+    try {
+        const response = await fetch("/api/leaderboard");
+        if (!response.ok) {
+            throw new Error("Failed to retrieve leaderboard");
+        }
+        const scores = await response.json();
+
+        scoresSection.hidden = scores.length === 0;
+        scoresList.innerHTML = "";
+
+        scores.forEach((score) => {
+            const li = document.createElement("li");
+            li.textContent = `${score.player_name} - ${score.attempts} attempts`;
+            scoresList.appendChild(li);
+        });
+    } catch (error) {
+        console.error("Leaderboard error:", error);
 }
 
 function startGame() {
@@ -74,7 +102,7 @@ function displayScores() {
     });
 }
 
-function checkGuess(guess) {
+async function checkGuess(guess) {
     if (gameOver) return;
 
     if (!Number.isInteger(guess) || guess < 1 || guess > 10) {
@@ -87,8 +115,9 @@ function checkGuess(guess) {
 
     if (guess === secretNumber) {
         feedback.textContent = `Congratulations, ${playerName}! You guessed it in ${attempts} attempts.`;
-        saveScore(playerName, attempts);
-        displayScores();
+
+        // make http request
+        await saveScore(playerName, attempts);
 
         gameOver = true;
         guessInput.disabled = true;

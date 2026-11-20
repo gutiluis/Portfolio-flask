@@ -276,8 +276,10 @@ def project_delete(project_id):
 
 
 @app.route("/api/scores", methods=["POST"])
+@csrf.exempt
 @limiter.limit("10 per minute")
 def submit_score():
+    """should store the score in the projects.db table"""
     data = request.get_json(silent=True)
 
     if not isinstance(data, dict):
