@@ -142,4 +142,3 @@ guessForm.addEventListener("submit", (event) => {
 });
 
 restartButton.addEventListener("click", startGame);
-displayScores();
