@@ -22,7 +22,7 @@ const initialProducts = [
         product_name: "Wireless Mouse",
         quantity: 20,
         price: 19.99,
-        updated_at: "2026-11-03 14:15:00 p.m.",
+        updated_at: "2026-11-03 2:15:00 p.m.",
     },
 ];
 
