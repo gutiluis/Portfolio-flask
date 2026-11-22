@@ -45,7 +45,9 @@ const emptyMessage = document.querySelector("#empty-message");
 
 // Initialize localStorage
 function initializeInventory() {
-    if (localStorage.getItem(STORAGE_KEY) === null) {
+    const storedProducts = localStorage.getItem(STORAGE_KEY);
+
+    if (storedProducts === null) {
         saveInventory(initialProducts);
     }
 
@@ -65,6 +67,7 @@ function saveInventory(products) {
 // Display html table inventory
 function displayInventory() {
     const products = getInventory();
+    inventoryTableBody.replaceChildren();
     const fragment = document.createDocumentFragment();
 
     inventoryCount.textContent = `${products.length} ${products.length === 1 ? "product" : "products"}`;
@@ -113,6 +116,12 @@ function displayInventory() {
     inventoryTableBody.appendChild(fragment);
 }
 
+function getNextProductId(products) {
+    return products.length
+        ? Math.max(...products.map((product) => Number(product.id))) + 1
+        : 1;
+}
+
 // Create or update product
 productForm.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -120,44 +129,17 @@ productForm.addEventListener("submit", (event) => {
     const products = getInventory();
 
     const product = {
+        id: getNextProductId(products),
         product_name: productNameInput.value.trim(),
         quantity: Number(quantityInput.value),
         price: Number(priceInput.value),
         updated_at: new Date().toLocaleString(),
     };
-
-    if (!product.product_name) {
-        return;
-    }
-
-    if (productIdInput.value) {
-        // Update existing product
-        const id = Number(productIdInput.value);
-
-        const index = products.findIndex((item) => item.id === id);
-
-        if (index === -1) {
-            return;
-        }
-
-        products[index] = {
-            ...products[index],
-            ...product,
-        };
-    } else {
-        // Create new product
-        const nextId =
-            products.reduce((maxId, item) => Math.max(maxId, item.id), 0) + 1;
-
-        products.push({
-            id: nextId,
-            ...product,
-        });
-    }
+    products.push(product);
 
     saveInventory(products);
-    resetForm();
     displayInventory();
+    resetForm();
 });
 
 // Edit product
