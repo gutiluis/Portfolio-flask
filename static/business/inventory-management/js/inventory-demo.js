@@ -197,13 +197,7 @@ cancelButton.addEventListener("click", resetForm);
 
 // Reset demo inventory
 resetButton.addEventListener("click", () => {
-    const confirmed = confirm("Restore the original demo inventory?");
-
-    if (!confirmed) {
-        return;
-    }
-
-    saveInventory(initialProducts);
+    saveInventory([]);
     resetForm();
     displayInventory();
 });

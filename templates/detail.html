@@ -48,9 +48,19 @@
         <script>
             const inventoryFrame = document.getElementById("inventory-frame");
             inventoryFrame.addEventListener("load", () => {
-                inventoryFrame.style.height =
-                    inventoryFrame.contentDocument.documentElement.scrollHeight + "px";
-            })
+                const frameDocument = inventoryFrame.contentDocument;
+                const resizeFrame = () => {
+                    const height = Math.max(
+                        frameDocument.body.scrollHeight,
+                        frameDocument.documentElement.scrollHeight
+                    );
+                    inventoryFrame.style.height = `${height}px`;
+                };
+                const observer = new ResizeObserver(resizeFrame);
+                observer.observe(frameDocument.body);
+                observer.observe(frameDocument.documentElement);
+                resizeFrame();
+            });
         </script>
     </section>
     {% endif %}

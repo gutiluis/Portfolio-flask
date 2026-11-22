@@ -14,9 +14,42 @@
     <body>
         <main>
             <header>
-                <h1>Inventory Management</h1>
-                <p>Browser demo: manage sample products.</p>
+                <h1>Inventory Resource Planner</h1>
+                <p>Demo to manage sample products</p>
             </header>
+
+            <section aria-labelledby="inventory-heading">
+                <header>
+                    <h2 id="inventory-heading">Inventory Records</h2>
+
+                    <button type="button" id="reset-button">
+                        Reset Demo Inventory
+                    </button>
+                </header>
+
+                <p id="inventory-count" aria-live="polite">0 products</p>
+
+                <p id="empty-message" hidden>No products found.</p>
+
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Product</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Last Updated</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="inventory-table-body">
+                            <!-- Products rendered by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
 
             <section aria-labelledby="inventory-form-heading">
                 <h2 id="inventory-form-heading">Add Product</h2>
@@ -72,43 +105,10 @@
                 </form>
             </section>
 
-            <section aria-labelledby="inventory-heading">
-                <header>
-                    <h2 id="inventory-heading">Inventory Records</h2>
-
-                    <button type="button" id="reset-button">
-                        Reset Demo Inventory
-                    </button>
-                </header>
-
-                <p id="inventory-count" aria-live="polite">0 products</p>
-
-                <p id="empty-message" hidden>No products found.</p>
-
-                <div>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Product</th>
-                                <th scope="col">Quantity</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Last Updated</th>
-                                <th scope="col">Actions</th>
-                            </tr>
-                        </thead>
-
-                        <tbody id="inventory-table-body">
-                            <!-- Products rendered by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
             <footer>
                 <p>
-                    Demo data is stored locally in your Brower. Does not provide
-                    a persistent db.
+                    Demo does not provide a persistent db. Please contact us to
+                    deliver the product.
                 </p>
             </footer>
         </main>
