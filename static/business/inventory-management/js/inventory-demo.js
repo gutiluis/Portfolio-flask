@@ -8,21 +8,21 @@ const initialProducts = [
         product_name: "Wireless Keyboard",
         quantity: 15,
         price: 29.99,
-        updated_at: "2026-11-01 10:00:00",
+        updated_at: "2026-11-01 10:00:00 a.m.",
     },
     {
         id: 2,
         product_name: "USB-C Cable",
         quantity: 30,
         price: 9.99,
-        updated_at: "2026-11-02 11:30:00",
+        updated_at: "2026-11-02 11:30:00 a.m.",
     },
     {
         id: 3,
         product_name: "Wireless Mouse",
         quantity: 20,
         price: 19.99,
-        updated_at: "2026-11-03 14:15:00",
+        updated_at: "2026-11-03 14:15:00 p.m.",
     },
 ];
 
@@ -127,16 +127,24 @@ productForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
     const products = getInventory();
+    const productId = Number(productIdInput.value);
 
     const product = {
-        id: getNextProductId(products),
+        id: productId || getNextProductId(products),
         product_name: productNameInput.value.trim(),
         quantity: Number(quantityInput.value),
         price: Number(priceInput.value),
         updated_at: new Date().toLocaleString(),
     };
-    products.push(product);
-
+    if (productId) {
+        const index = products.findIndex((item) => item.id === productId);
+        if (index === -1) {
+            return;
+        }
+        products[index] = product;
+    } else {
+        products.push(product);
+    }
     saveInventory(products);
     displayInventory();
     resetForm();
@@ -151,7 +159,7 @@ function editProduct(id) {
     if (!product) {
         return;
     }
-
+    // value is a property
     productIdInput.value = product.id;
     productNameInput.value = product.product_name;
     quantityInput.value = product.quantity;
