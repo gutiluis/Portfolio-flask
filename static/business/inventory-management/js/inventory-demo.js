@@ -7,21 +7,24 @@ const initialProducts = [
         id: 1,
         product_name: "Wireless Keyboard",
         quantity: 15,
-        price: 29.99,
+        unit_cost: 29.99,
+        selling_price: 40,
         updated_at: "2026-11-01T10:00:00",
     },
     {
         id: 2,
         product_name: "USB-C Cable",
         quantity: 30,
-        price: 9.99,
+        unit_cost: 10,
+        selling_price: 20,
         updated_at: "2026-11-02T11:30:00",
     },
     {
         id: 3,
         product_name: "Wireless Mouse",
         quantity: 20,
-        price: 19.99,
+        unit_cost: 20,
+        selling_price: 22.99,
         updated_at: "2026-11-03T14:15:00",
     },
 ];
@@ -31,7 +34,8 @@ const productForm = document.querySelector("#product-form");
 const productIdInput = document.querySelector("#product-id");
 const productNameInput = document.querySelector("#product-name");
 const quantityInput = document.querySelector("#quantity");
-const priceInput = document.querySelector("#price");
+const unitCostInput = document.getElementById("unit-cost");
+const sellingPriceInput = document.getElementById("selling-price");
 const updatedAtContainer = document.getElementById("updated-at-container");
 const updatedAt = document.querySelector("#updated-at");
 
@@ -91,7 +95,8 @@ function displayInventory() {
             product.id,
             product.product_name,
             product.quantity,
-            `$${Number(product.price).toFixed(2)}`,
+            `$${Number(product.unit_cost).toFixed(2)}`,
+            `$${Number(product.selling_price).toFixed(2)}`,
             formattedDate,
         ];
 
@@ -143,7 +148,8 @@ productForm.addEventListener("submit", (event) => {
         id: productId || getNextProductId(products),
         product_name: productNameInput.value.trim(),
         quantity: Number(quantityInput.value),
-        price: Number(priceInput.value),
+        unit_cost: Number(unitCostInput.value),
+        selling_price: Number(sellingPriceInput.value),
         updated_at: new Date().toISOString(),
     };
     if (productId) {
@@ -173,7 +179,8 @@ function editProduct(id) {
     productIdInput.value = product.id;
     productNameInput.value = product.product_name;
     quantityInput.value = product.quantity;
-    priceInput.value = product.price;
+    unitCostInput.value = product.unit_cost;
+    sellingPriceInput.value = product.selling_price;
     updatedAtContainer.hidden = false;
     updatedAt.textContent = formatDate(product.updated_at);
 
