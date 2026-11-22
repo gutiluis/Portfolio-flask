@@ -8,21 +8,21 @@ const initialProducts = [
         product_name: "Wireless Keyboard",
         quantity: 15,
         price: 29.99,
-        updated_at: "2026/11/01 10:00:00 a.m.",
+        updated_at: "2026-11-01T10:00:00",
     },
     {
         id: 2,
         product_name: "USB-C Cable",
         quantity: 30,
         price: 9.99,
-        updated_at: "2026/11/02 11:30:00 a.m.",
+        updated_at: "2026-11-02T11:30:00",
     },
     {
         id: 3,
         product_name: "Wireless Mouse",
         quantity: 20,
         price: 19.99,
-        updated_at: "2026/11/03 2:15:00 p.m.",
+        updated_at: "2026-11-03T14:15:00",
     },
 ];
 
@@ -64,6 +64,16 @@ function saveInventory(products) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
 }
 
+function formatDate(date) {
+    return new Date(date).toLocaleString("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "numeric",
+        minute: "2-digit",
+    });
+}
+
 // Display html table inventory
 function displayInventory() {
     const products = getInventory();
@@ -76,13 +86,13 @@ function displayInventory() {
 
     products.forEach((product) => {
         const row = document.createElement("tr");
-
+        const formattedDate = formatDate(product.updated_at);
         const values = [
             product.id,
             product.product_name,
             product.quantity,
             `$${Number(product.price).toFixed(2)}`,
-            product.updated_at,
+            formattedDate,
         ];
 
         values.forEach((value) => {
@@ -134,17 +144,7 @@ productForm.addEventListener("submit", (event) => {
         product_name: productNameInput.value.trim(),
         quantity: Number(quantityInput.value),
         price: Number(priceInput.value),
-        updated_at: new Date()
-            .toLocaleString("en-US", {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-                hour: "numeric",
-                minute: "2-digit",
-                second: "2-digit",
-                hour12: true,
-            })
-            .replace(",", ""),
+        updated_at: new Date().toISOString(),
     };
     if (productId) {
         const index = products.findIndex((item) => item.id === productId);
@@ -175,7 +175,7 @@ function editProduct(id) {
     quantityInput.value = product.quantity;
     priceInput.value = product.price;
     updatedAtContainer.hidden = false;
-    updatedAt.textContent = new Date(product.updated_at).toLocaleString();
+    updatedAt.textContent = formatDate(product.updated_at);
 
     submitButton.textContent = "Update Product";
     cancelButton.hidden = false;
