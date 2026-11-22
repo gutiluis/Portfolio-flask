@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="Browser-based inventory management demo."
+        />
+        <title>Inventory Management Demo</title>
+        <link rel="stylesheet" href="css/styles.css" />
+    </head>
+
+    <body>
+        <main>
+            <header>
+                <h1>Inventory Management</h1>
+                <p>Browser demo: manage sample products.</p>
+            </header>
+
+            <section aria-labelledby="inventory-form-heading">
+                <h2 id="inventory-form-heading">Add Product</h2>
+
+                <form id="product-form">
+                    <input type="hidden" id="product-id" readonly />
+
+                    <div>
+                        <label for="product-name">Product Name</label>
+                        <input
+                            type="text"
+                            id="product-name"
+                            name="product_name"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label for="quantity">Quantity</label>
+                        <input
+                            type="number"
+                            id="quantity"
+                            name="quantity"
+                            min="0"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label for="price">Price</label>
+                        <input
+                            type="number"
+                            id="price"
+                            name="price"
+                            min="0"
+                            step="0.01"
+                            required
+                        />
+                    </div>
+
+                    <div id="updated-at-container" hidden>
+                        <label for="updated-at">Last Updated</label>
+                        <time id="updated-at"></time>
+                    </div>
+
+                    <button type="submit" id="submit-button">
+                        Add Product
+                    </button>
+
+                    <button type="button" id="cancel-button" hidden>
+                        Cancel
+                    </button>
+                </form>
+            </section>
+
+            <section aria-labelledby="inventory-heading">
+                <header>
+                    <h2 id="inventory-heading">Inventory Records</h2>
+
+                    <button type="button" id="reset-button">
+                        Reset Demo Inventory
+                    </button>
+                </header>
+
+                <p id="inventory-count" aria-live="polite">0 products</p>
+
+                <p id="empty-message" hidden>No products found.</p>
+
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Product</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Last Updated</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="inventory-table-body">
+                            <!-- Products rendered by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <footer>
+                <p>
+                    Demo data is stored locally in your Brower. Does not provide
+                    a persistent db.
+                </p>
+            </footer>
+        </main>
+        <script src="js/inventory-demo.js" defer></script>
+    </body>
+</html>

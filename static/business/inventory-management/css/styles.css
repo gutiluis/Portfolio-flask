@@ -1,0 +1,155 @@
+:root {
+    color-scheme: dark;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #000;
+    color: #4ade80;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 2rem 1rem;
+    background: #000;
+    color: #4ade80;
+}
+
+.container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+h1,
+h2 {
+    color: #4ade80;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 2rem;
+}
+
+h2 {
+    margin-bottom: 1rem;
+}
+
+section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border: 1px solid #166534;
+    border-radius: 8px;
+    background: #050505;
+}
+
+form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+input,
+button {
+    width: 100%;
+    min-height: 42px;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid #166534;
+    border-radius: 5px;
+    font: inherit;
+}
+
+input {
+    background: #111;
+    color: #4ade80;
+}
+
+input:focus {
+    outline: 2px solid #22c55e;
+    outline-offset: 2px;
+}
+
+input::placeholder {
+    color: #86a68e;
+}
+
+button {
+    background: #14532d;
+    color: #bbf7d0;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+button:hover {
+    background: #166534;
+}
+
+button:focus-visible {
+    outline: 2px solid #4ade80;
+    outline-offset: 3px;
+}
+
+form button {
+    grid-column: 1 / -1;
+}
+
+#updated-at {
+    color: #86a68e;
+    font-size: 0.875rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+th,
+td {
+    padding: 0.85rem;
+    border: 1px solid #166534;
+    text-align: left;
+}
+
+th {
+    background: #14532d;
+    color: #dcfce7;
+}
+
+td {
+    background: #080808;
+}
+
+td button {
+    width: auto;
+    margin: 0.2rem;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 1rem 0.5rem;
+    }
+
+    section {
+        padding: 1rem;
+    }
+
+    form {
+        grid-template-columns: 1fr;
+    }
+
+    table {
+        font-size: 0.8rem;
+    }
+
+    th,
+    td {
+        padding: 0.5rem;
+    }
+
+    td button {
+        width: 100%;
+    }
+}

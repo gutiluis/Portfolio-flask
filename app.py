@@ -342,6 +342,8 @@ def get_leaderboard():
         ]
     )
 
+    return render_template("inventory_demo.html")
+
 
 @app.route("/about")
 def about():

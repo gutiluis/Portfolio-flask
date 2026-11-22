@@ -39,6 +39,22 @@
     </section>
     {% endif %}
 
+    {% if project.title == "Store Inventory" %}
+    <section class="mb-12">
+        <h2 class="mb-5 text-2xl font-bold">Inventory Management</h2>
+
+        <iframe id="inventory-frame" src="{{ url_for('static', filename='business/inventory-management/index.html') }}"
+            title="Inventory Management - Demo Version" class="w-full border border-green-400" scrolling="no"></iframe>
+        <script>
+            const inventoryFrame = document.getElementById("inventory-frame");
+            inventoryFrame.addEventListener("load", () => {
+                inventoryFrame.style.height =
+                    inventoryFrame.contentDocument.documentElement.scrollHeight + "px";
+            })
+        </script>
+    </section>
+    {% endif %}
+
     {% if current_user.is_authenticated and current_user.is_owner %}
     <section id="edit-delete" class="flex flex-wrap gap-4 border-t border-gray-700 pt-6">
         <a href="{{ url_for('project_edit', project_id=project.id) }}"
