@@ -134,15 +134,17 @@ productForm.addEventListener("submit", (event) => {
         product_name: productNameInput.value.trim(),
         quantity: Number(quantityInput.value),
         price: Number(priceInput.value),
-        updated_at: new Date().toLocaleString("en-US", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-            hour: "numeric",
-            minute: "2-digit",
-            second: "2-digit",
-            hour12: true,
-        }),
+        updated_at: new Date()
+            .toLocaleString("en-US", {
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "numeric",
+                minute: "2-digit",
+                second: "2-digit",
+                hour12: true,
+            })
+            .replace(",", ""),
     };
     if (productId) {
         const index = products.findIndex((item) => item.id === productId);
