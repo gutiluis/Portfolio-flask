@@ -38,6 +38,7 @@ const unitCostInput = document.getElementById("unit-cost");
 const sellingPriceInput = document.getElementById("selling-price");
 const updatedAtContainer = document.getElementById("updated-at-container");
 const updatedAt = document.querySelector("#updated-at");
+const inventoryKPIs = document.getElementById("inventory-kpis");
 
 const submitButton = document.querySelector("#submit-button");
 const cancelButton = document.querySelector("#cancel-button");
@@ -56,6 +57,73 @@ function initializeInventory() {
     }
 
     displayInventory();
+}
+
+function calculateInventoryKPIs(products) {
+    const totalProducts = products.length;
+    const totalStock = products.reduce(
+        (total, product) => total + product.quantity,
+        0,
+    );
+
+    const totalInventoryValue = products.reduce(
+        (total, product) => total + product.quantity * product.unit_cost,
+        0,
+    );
+
+    const averageUnitCost = totalProducts
+        ? products.reduce((total, product) => total + product.unit_cost, 0) /
+          totalProducts
+        : 0;
+    return {
+        totalProducts,
+        totalStock,
+        totalInventoryValue,
+        averageUnitCost,
+    };
+}
+
+// kpi rendering function with cards in tailwindcss
+function displayInventoryKPIs(products) {
+    const kpis = calculateInventoryKPIs(products);
+    const metrics = [
+        {
+            label: "Total Products",
+            value: kpis.totalProducts,
+        },
+        {
+            label: "Total Stock",
+            value: kpis.totalStock,
+        },
+        {
+            label: "Inventory Value",
+            value: `$${kpis.totalInventoryValue.toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+            })}`,
+        },
+        {
+            label: "Average Unit Cost",
+            value: `$${kpis.averageUnitCost.toFixed(2)}`,
+        },
+    ];
+    inventoryKPIs.replaceChildren();
+    metrics.forEach((metric) => {
+        const card = document.createElement("article");
+        const heading = document.createElement("h3");
+        const value = document.createElement("p");
+
+        card.className = "border border-green-400 bg-black p-4";
+
+        heading.className = "mb-2 text-sm text-green-200";
+        heading.textContent = metric.label;
+
+        value.className = "text-2xl font-bold text-green-400";
+        value.textContent = metric.value;
+
+        card.append(heading, value);
+        inventoryKPIs.append(card);
+    });
 }
 
 // Read inventory
@@ -81,6 +149,7 @@ function formatDate(date) {
 // Display html table inventory
 function displayInventory() {
     const products = getInventory();
+    displayInventoryKPIs(products);
     inventoryTableBody.replaceChildren();
     const fragment = document.createDocumentFragment();
 

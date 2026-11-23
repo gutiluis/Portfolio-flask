@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 @source "../../templates";
+@source "../business/inventory-management/index.html";
+@source "../business/inventory-management/js/inventory-demo.js";
 
 #matrix {
     position: fixed;
