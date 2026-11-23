@@ -47,6 +47,10 @@ const resetButton = document.querySelector("#reset-button");
 const inventoryTableBody = document.querySelector("#inventory-table-body");
 const inventoryCount = document.querySelector("#inventory-count");
 const emptyMessage = document.querySelector("#empty-message");
+// current year display
+document.querySelectorAll(".current-year").forEach((element) => {
+    element.textContent = new Date().getFullYear();
+});
 
 // Initialize localStorage
 function initializeInventory() {
@@ -126,6 +130,86 @@ function displayInventoryKPIs(products) {
     });
 }
 
+let unitCostChart;
+let inventoryValueChart;
+function displayInventoryCharts(products) {
+    const labels = products.map((product) => product.product_name);
+    const unitCosts = products.map((product) => product.unit_cost);
+    const inventoryValues = products.map(
+        (product) => product.quantity * product.unit_cost,
+    );
+    const chartOptions = {
+        indexAxis: "y",
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false,
+            },
+        },
+        scales: {
+            x: {
+                beginAtZero: true,
+                ticks: {
+                    color: "#4ade80",
+                },
+            },
+            y: {
+                ticks: {
+                    color: "#4ade80",
+                },
+            },
+        },
+    };
+    if (unitCostChart) {
+        unitCostChart.destroy();
+    }
+    unitCostChart = new Chart(document.getElementById("unit-cost-chart"), {
+        type: "bar",
+        data: {
+            labels,
+            datasets: [
+                {
+                    label: "Unit Cost ($)",
+                    data: unitCosts,
+                    backgroundColor: "rgba(34, 197, 94, 0.75)",
+                    borderColor: "#22c55e",
+                    borderWidth: 1,
+                    borderRadius: 6,
+                    borderSkipped: false,
+                    barThickness: 14,
+                },
+            ],
+        },
+        options: chartOptions,
+    });
+    if (inventoryValueChart) {
+        inventoryValueChart.destroy();
+    }
+    inventoryValueChart = new Chart(
+        document.getElementById("inventory-value-chart"),
+        {
+            type: "bar",
+            data: {
+                labels,
+                datasets: [
+                    {
+                        label: "Inventory Value ($)",
+                        data: inventoryValues,
+                        backgroundColor: "rgba(34, 197, 94, 0.75)",
+                        borderColor: "#22c55e",
+                        borderWidth: 1,
+                        borderRadius: 6,
+                        borderSkipped: false,
+                        barThickness: 14,
+                    },
+                ],
+            },
+            options: chartOptions,
+        },
+    );
+}
+
 // Read inventory
 function getInventory() {
     return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -150,6 +234,7 @@ function formatDate(date) {
 function displayInventory() {
     const products = getInventory();
     displayInventoryKPIs(products);
+    displayInventoryCharts(products);
     inventoryTableBody.replaceChildren();
     const fragment = document.createDocumentFragment();
 

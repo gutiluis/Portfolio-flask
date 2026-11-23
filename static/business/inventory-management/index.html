@@ -19,18 +19,32 @@
                 <p>Demo to manage sample products</p>
             </header>
             <section aria-labelledby="analytics-heading">
-                <h2 id="analytics-heading">Inventory Analytics</h2>
+                <h2 id="analytics-heading">
+                    Inventory Analytics - <span class="current-year"></span>
+                </h2>
                 <div
                     id="inventory-kpis"
                     class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4"
                 >
                     <!-- KPI cards rendered by JS -->
                 </div>
+                <div class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
+                    <article class="h-80">
+                        <h3>Unit Cost by Product</h3>
+                        <canvas id="unit-cost-chart"></canvas>
+                    </article>
+                    <article class="h-80">
+                        <h3>Inventory Value by Product</h3>
+                        <canvas id="inventory-value-chart"></canvas>
+                    </article>
+                </div>
             </section>
 
             <section aria-labelledby="inventory-heading">
                 <header>
-                    <h2 id="inventory-heading">Inventory Records</h2>
+                    <h2 id="inventory-heading">
+                        Inventory Records - <span class="current-year"></span>
+                    </h2>
 
                     <button type="button" id="reset-button">
                         Reset Demo Inventory
@@ -134,6 +148,10 @@
                 </p>
             </footer>
         </main>
-        <script src="js/inventory-demo.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script
+            src="/static/business/inventory-management/js/inventory-demo.js"
+            defer
+        ></script>
     </body>
 </html>

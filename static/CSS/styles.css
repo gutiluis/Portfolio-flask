@@ -262,6 +262,9 @@
   .mt-6 {
     margin-top: calc(var(--spacing) * 6);
   }
+  .mt-8 {
+    margin-top: calc(var(--spacing) * 8);
+  }
   .mt-10 {
     margin-top: calc(var(--spacing) * 10);
   }
@@ -312,6 +315,9 @@
   }
   .table {
     display: table;
+  }
+  .h-80 {
+    height: calc(var(--spacing) * 80);
   }
   .h-\[600px\] {
     height: 600px;
@@ -753,6 +759,9 @@
     }
   }
   @media (width >= 64rem) {
+    .lg\:grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
     .lg\:grid-cols-3 {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
