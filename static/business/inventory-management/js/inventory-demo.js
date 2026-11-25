@@ -87,6 +87,7 @@ const supplierTableBody = document.getElementById("supplier-table-body");
 const inventoryTableBody = document.querySelector("#inventory-table-body");
 const inventoryCount = document.querySelector("#inventory-count");
 const supplierCount = document.querySelector("#supplier-count");
+const productSupplierSelect = document.getElementById("product-supplier");
 const emptyMessage = document.querySelector("#empty-message");
 const supplierEmptyMessage = document.querySelector("#supplier-empty-message");
 // current year display
@@ -94,6 +95,27 @@ document.querySelectorAll(".current-year").forEach((element) => {
     element.textContent = new Date().getFullYear();
 });
 
+// supplier product relationship
+function displaySupplierOptions() {
+    const suppliers = getSuppliers();
+
+    productSupplierSelect.replaceChildren();
+
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "Select Supplier";
+
+    productSupplierSelect.append(defaultOption);
+
+    suppliers.forEach((supplier) => {
+        const option = document.createElement("option");
+
+        option.value = supplier.id;
+        option.textContent = supplier.supplier_name;
+
+        productSupplierSelect.append(option);
+    });
+}
 function getSuppliers() {
     return JSON.parse(localStorage.getItem(SUPPLIER_STORAGE_KEY)) || [];
 }
@@ -271,7 +293,7 @@ function initializeInventory() {
     if (storedSuppliers === null) {
         saveSuppliers(initialSuppliers);
     }
-
+    displaySupplierOptions();
     displayInventory();
     displaySuppliers();
 }
@@ -519,7 +541,7 @@ productForm.addEventListener("submit", (event) => {
     const product = {
         id: productId || getNextProductId(products),
         product_name: productNameInput.value.trim(),
-        supplier_id: Number(supplierIdInput.value),
+        supplier_id: Number(productSupplierSelect.value),
         quantity: Number(quantityInput.value),
         unit_cost: Number(unitCostInput.value),
         selling_price: Number(sellingPriceInput.value),
@@ -580,6 +602,16 @@ function deleteProduct(id) {
 }
 
 function deleteSupplier(supplierId) {
+    const products = getInventory();
+    const hasProducts = products.some(
+        (product) => product.supplierId === Number(supplierId),
+    );
+    if (hasProducts) {
+        alert(
+            "Cannot delete this Supplier because products are assigned to it.",
+        );
+        return;
+    }
     const confirmed = confirm("Are you sure you want to delete the supplier?");
     if (!confirmed) {
         return;
@@ -590,7 +622,8 @@ function deleteSupplier(supplierId) {
     );
 
     saveSuppliers(suppliers);
-    resetForm();
+    resetSupplierForm();
+    displaySupplierOptions();
     displaySuppliers();
 }
 
