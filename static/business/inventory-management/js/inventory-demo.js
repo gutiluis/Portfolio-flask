@@ -1,11 +1,36 @@
 // file: inventory-demo.js
 // descr: non persistent inventory demo
 const STORAGE_KEY = "inventoryDemo";
+const SUPPLIER_STORAGE_KEY = "supplierDemo";
+
+const initialSuppliers = [
+    {
+        id: 1,
+        supplier_name: "Tech Supplies Co.",
+        contact_person: "Hanna Smith",
+        email: "hanna@techsupplies.com",
+        phone: "640-333-4323",
+        address: "123 Anzio Drive",
+        payment_terms: "Net 30",
+        status: "Active",
+    },
+    {
+        id: 2,
+        supplier_name: "Digital Comp. Ltd.",
+        contact_person: "Jeff Earling",
+        email: "jeff@digital.com",
+        phone: "332-945-0021",
+        address: "9542 Main Street",
+        payment_terms: "Net 15",
+        status: "Active",
+    },
+];
 
 const initialProducts = [
     {
         id: 1,
         product_name: "Wireless Keyboard",
+        supplier_id: 1,
         quantity: 15,
         unit_cost: 29.99,
         selling_price: 40,
@@ -14,6 +39,7 @@ const initialProducts = [
     {
         id: 2,
         product_name: "USB-C Cable",
+        supplier_id: 2,
         quantity: 30,
         unit_cost: 10,
         selling_price: 20,
@@ -22,6 +48,7 @@ const initialProducts = [
     {
         id: 3,
         product_name: "Wireless Mouse",
+        supplier_id: 1,
         quantity: 20,
         unit_cost: 20,
         selling_price: 22.99,
@@ -39,28 +66,214 @@ const sellingPriceInput = document.getElementById("selling-price");
 const updatedAtContainer = document.getElementById("updated-at-container");
 const updatedAt = document.querySelector("#updated-at");
 const inventoryKPIs = document.getElementById("inventory-kpis");
-
+const supplierSearchInput = document.getElementById("supplier-search");
+const supplierKPIs = document.getElementById("supplier-kpis");
+const supplierIdInput = document.getElementById("supplier-id");
+const supplierForm = document.getElementById("supplier-form");
+const supplierNameInput = document.getElementById("supplier-name");
+const contactPersonInput = document.getElementById("contact-person");
+const supplierEmailInput = document.getElementById("supplier-email");
+const supplierPhoneInput = document.getElementById("supplier-phone");
+const supplierAddressInput = document.getElementById("supplier-address");
+const paymentTermsInput = document.getElementById("payment-terms");
+const supplierStatusInput = document.getElementById("supplier-status");
+const addSupplierButton = document.getElementById("add-supplier-button");
+const cancelSupplierButton = document.getElementById("cancel-supplier-button");
 const submitButton = document.querySelector("#submit-button");
 const cancelButton = document.querySelector("#cancel-button");
 const resetButton = document.querySelector("#reset-button");
-
+const resetSuppliersButton = document.querySelector("#reset-suppliers");
+const supplierTableBody = document.getElementById("supplier-table-body");
 const inventoryTableBody = document.querySelector("#inventory-table-body");
 const inventoryCount = document.querySelector("#inventory-count");
+const supplierCount = document.querySelector("#supplier-count");
 const emptyMessage = document.querySelector("#empty-message");
+const supplierEmptyMessage = document.querySelector("#supplier-empty-message");
 // current year display
 document.querySelectorAll(".current-year").forEach((element) => {
     element.textContent = new Date().getFullYear();
 });
 
+function getSuppliers() {
+    return JSON.parse(localStorage.getItem(SUPPLIER_STORAGE_KEY)) || [];
+}
+
+function saveSuppliers(suppliers) {
+    localStorage.setItem(SUPPLIER_STORAGE_KEY, JSON.stringify(suppliers));
+}
+
+function searchSuppliers(searchTerm) {
+    const suppliers = getSuppliers();
+    const filteredSuppliers = suppliers.filter((supplier) =>
+        Object.values(supplier).some((value) =>
+            String(value)
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase().trim()),
+        ),
+    );
+    displaySuppliers(filteredSuppliers);
+}
+supplierSearchInput.addEventListener("input", (event) => {
+    searchSuppliers(event.target.value);
+});
+supplierForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const suppliers = getSuppliers();
+    const supplierId = Number(supplierIdInput.value);
+
+    const newSupplier = {
+        id: supplierId || getNextSupplierId(suppliers),
+        supplier_name: supplierNameInput.value.trim(),
+        contact_person: contactPersonInput.value.trim(),
+        email: supplierEmailInput.value.trim(),
+        phone: supplierPhoneInput.value.trim(),
+        address: supplierAddressInput.value.trim(),
+        payment_terms: paymentTermsInput.value.trim(),
+        status: supplierStatusInput.value,
+    };
+    if (supplierId) {
+        const index = suppliers.findIndex((item) => item.id === supplierId);
+        if (index === -1) {
+            return;
+        }
+        suppliers[index] = newSupplier;
+    } else {
+        suppliers.push(newSupplier);
+    }
+    saveSuppliers(suppliers);
+    displaySuppliers();
+    resetForm();
+});
+
+// Edit Supplier
+function editSupplier(id) {
+    const suppliers = getSuppliers();
+    const supplier = suppliers.find((item) => item.id === id);
+    if (!supplier) {
+        return;
+    }
+    supplierIdInput.value = supplier.id;
+    supplierNameInput.value = supplier.supplier_name;
+    contactPersonInput.value = supplier.contact_person;
+    supplierEmailInput.value = supplier.email;
+    supplierPhoneInput.value = supplier.phone;
+    supplierAddressInput.value = supplier.address;
+    paymentTermsInput.value = supplier.payment_terms;
+    supplierStatusInput.value = supplier.status;
+
+    submitButton.textContent = "Edit Supplier";
+    cancelButton.hidden = false;
+
+    supplierNameInput.focus();
+}
+function calculateSupplierKPIs(suppliers) {
+    const totalSuppliers = suppliers.length;
+    const activeSuppliers = suppliers.filter(
+        (supplier) => supplier.status === "Active",
+    ).length;
+
+    return {
+        totalSuppliers,
+        activeSuppliers,
+    };
+}
+function displaySupplierKPIs(suppliers) {
+    const kpis = calculateSupplierKPIs(suppliers);
+    const metrics = [
+        {
+            label: "Total Suppliers",
+            value: kpis.totalSuppliers,
+        },
+        {
+            label: "Active Suppliers",
+            value: kpis.activeSuppliers,
+        },
+    ];
+    supplierKPIs.replaceChildren();
+    metrics.forEach((metric) => {
+        const card = document.createElement("article");
+        const heading = document.createElement("h3");
+        const value = document.createElement("p");
+
+        card.className = "border border-green-400 bg-black p-4";
+
+        heading.className = "mb-2 text-sm text-green-200";
+        heading.textContent = metric.label;
+
+        value.className = "text-2xl font-bold text-green-400";
+        value.textContent = metric.value;
+        card.append(heading, value);
+        supplierKPIs.append(card);
+    });
+}
+
+function displaySuppliers(suppliers = getSuppliers()) {
+    displaySupplierKPIs(suppliers);
+    supplierTableBody.replaceChildren();
+    const fragment = document.createDocumentFragment();
+
+    supplierCount.textContent = `${suppliers.length} ${suppliers.length === 1 ? "supplier" : "suppliers"}`;
+
+    supplierEmptyMessage.hidden = suppliers.length !== 0;
+
+    suppliers.forEach((supplier) => {
+        const row = document.createElement("tr");
+        const values = [
+            supplier.id,
+            supplier.supplier_name,
+            supplier.contact_person,
+            supplier.email,
+            supplier.phone,
+            supplier.status,
+        ];
+
+        values.forEach((value) => {
+            const cell = document.createElement("td");
+            cell.textContent = value;
+            row.appendChild(cell);
+        });
+
+        const actionsCell = document.createElement("td");
+
+        const editButton = document.createElement("button");
+        editButton.type = "button";
+        editButton.textContent = "Edit";
+        editButton.addEventListener("click", () => {
+            editSupplier(supplier.id);
+        });
+
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.textContent = "Delete";
+        deleteButton.addEventListener("click", () => {
+            deleteSupplier(supplier.id);
+        });
+
+        actionsCell.append(editButton, deleteButton);
+        row.appendChild(actionsCell);
+
+        fragment.appendChild(row);
+    });
+
+    supplierTableBody.appendChild(fragment);
+}
+
 // Initialize localStorage
 function initializeInventory() {
     const storedProducts = localStorage.getItem(STORAGE_KEY);
+
+    const storedSuppliers = localStorage.getItem(SUPPLIER_STORAGE_KEY);
 
     if (storedProducts === null) {
         saveInventory(initialProducts);
     }
 
+    if (storedSuppliers === null) {
+        saveSuppliers(initialSuppliers);
+    }
+
     displayInventory();
+    displaySuppliers();
 }
 
 function calculateInventoryKPIs(products) {
@@ -291,16 +504,22 @@ function getNextProductId(products) {
         : 1;
 }
 
+function getNextSupplierId(suppliers) {
+    return suppliers.length
+        ? Math.max(...suppliers.map((supplier) => Number(supplier.id))) + 1
+        : 1;
+}
+
 // Create or update product
 productForm.addEventListener("submit", (event) => {
     event.preventDefault();
-
     const products = getInventory();
     const productId = Number(productIdInput.value);
 
     const product = {
         id: productId || getNextProductId(products),
         product_name: productNameInput.value.trim(),
+        supplier_id: Number(supplierIdInput.value),
         quantity: Number(quantityInput.value),
         unit_cost: Number(unitCostInput.value),
         selling_price: Number(sellingPriceInput.value),
@@ -332,6 +551,7 @@ function editProduct(id) {
     // value is a property
     productIdInput.value = product.id;
     productNameInput.value = product.product_name;
+    supplierIdInput.value = product.supplier_id;
     quantityInput.value = product.quantity;
     unitCostInput.value = product.unit_cost;
     sellingPriceInput.value = product.selling_price;
@@ -359,10 +579,24 @@ function deleteProduct(id) {
     displayInventory();
 }
 
+function deleteSupplier(supplierId) {
+    const confirmed = confirm("Are you sure you want to delete the supplier?");
+    if (!confirmed) {
+        return;
+    }
+
+    const suppliers = getSuppliers().filter(
+        (supplier) => supplier.id !== Number(supplierId),
+    );
+
+    saveSuppliers(suppliers);
+    resetForm();
+    displaySuppliers();
+}
+
 // Reset form
 function resetForm() {
     productForm.reset();
-
     productIdInput.value = "";
     updatedAtContainer.hidden = true;
     updatedAt.textContent = "";
@@ -379,6 +613,20 @@ resetButton.addEventListener("click", () => {
     saveInventory([]);
     resetForm();
     displayInventory();
+});
+
+function resetSupplierForm() {
+    supplierForm.reset();
+    supplierIdInput.value = "";
+
+    submitButton.textContent = "Add Supplier";
+    cancelButton.hidden = true;
+}
+
+resetSuppliersButton.addEventListener("click", () => {
+    saveSuppliers([]);
+    resetSupplierForm();
+    displaySuppliers();
 });
 
 // Start application

@@ -76,6 +76,133 @@
                 </div>
             </section>
 
+            <section aria-labelledby="suppliers-heading">
+                <header class="mb-6">
+                    <h2 id="suppliers-heading">
+                        Supplier Management - <span class="current-year"></span>
+                    </h2>
+                    <button type="button" id="reset-suppliers">
+                        Reset Demo Suppliers
+                    </button>
+                </header>
+                <div
+                    id="supplier-kpis"
+                    class="grid grid-cols-1 sm:grid-cols-2 gap-6"
+                >
+                    <!-- JS Supplier KPIs -->
+                </div>
+                <div class="mt-6">
+                    <label for="supplier-search">Search Suppliers</label>
+                    <input
+                        type="search"
+                        id="supplier-search"
+                        placeholder="Search by supplier or contact..."
+                    />
+                </div>
+                <p id="supplier-count" aria-live="polite">0 Suppliers</p>
+                <p id="supplier-empty-message" hidden>No suppliers found.</p>
+                <div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Supplier</th>
+                                <th scope="col">Contact</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="supplier-table-body">
+                            <!-- Suppliers -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section aria-labelledby="supplier-from-heading">
+                <h2 id="supplier-from-heading">Add Supplier</h2>
+                <form id="supplier-form">
+                    <input type="hidden" id="supplier-id" readonly />
+                    <div>
+                        <label for="supplier-name">Supplier Name </label>
+                        <input
+                            type="text"
+                            id="supplier-name"
+                            name="supplier_name"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label for="contact-person">Contact</label>
+                        <input
+                            type="text"
+                            id="contact-person"
+                            name="contact_person"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label for="supplier-email">Email</label>
+                        <input
+                            type="email"
+                            id="supplier-email"
+                            name="email"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label for="supplier-phone">Phone</label>
+                        <input
+                            type="tel"
+                            id="supplier-phone"
+                            name="phone"
+                            required
+                        />
+                    </div>
+                    <div>
+                        <label for="supplier-address">Address</label>
+                        <input
+                            type="text"
+                            id="supplier-address"
+                            name="address"
+                            required
+                        />
+                    </div>
+
+                    <div>
+                        <label for="payment-terms">Payment Terms</label>
+                        <select
+                            id="payment-terms"
+                            name="payment_terms"
+                            required
+                        >
+                            <option value="">Select payment terms</option>
+                            <option value="Net 15">Net 15</option>
+                            <option value="Net 30">Net 30</option>
+                            <option value="Net 60">Net 60</option>
+                            <option value="Due on Receipt">
+                                Due on Receipt
+                            </option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="supplier-status">Status</label>
+                        <select id="supplier-status" name="status" required>
+                            <option value="Active">Active</option>
+                            <option value="Inactive">Inactive</option>
+                        </select>
+                    </div>
+                    <button type="submit" id="add-supplier-button">
+                        Add Supplier
+                    </button>
+                    <button type="button" id="cancel-supplier-button">
+                        Cancel
+                    </button>
+                </form>
+            </section>
+
             <section aria-labelledby="inventory-form-heading">
                 <h2 id="inventory-form-heading">Add Product</h2>
 
@@ -143,8 +270,8 @@
 
             <footer>
                 <p>
-                    Demo does not provide a persistent db. Please contact us to
-                    deliver the product.
+                    Demo does not provide Database persistency. Please contact
+                    us to deliver the product.
                 </p>
             </footer>
         </main>
