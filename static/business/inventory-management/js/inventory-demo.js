@@ -57,6 +57,7 @@ const initialProducts = [
 ];
 
 // DOM elements
+const lowStockList = document.getElementById("low-stock-list");
 const reorderLevelInput = document.getElementById("reorder-level");
 const productForm = document.querySelector("#product-form");
 const productIdInput = document.querySelector("#product-id");
@@ -512,6 +513,7 @@ const statusDotClasses = {
 function displayInventory() {
     const products = getInventory();
     displayInventoryKPIs(products);
+    displayLowStockAlerts(products);
     displayInventoryCharts(products);
     inventoryTableBody.replaceChildren();
 
@@ -631,6 +633,56 @@ productForm.addEventListener("submit", (event) => {
     displayInventory();
     resetForm();
 });
+
+function displayLowStockAlerts(products) {
+    lowStockList.replaceChildren();
+
+    const alertProducts = products.filter((product) => {
+        const status = getStockStatus(product);
+        return status === "low-stock" || status === "out-of-stock";
+    });
+
+    if (alertProducts.length === 0) {
+        const message = document.createElement("p");
+        message.className = "text-sm text-green-400";
+        message.textContent = "All products have sufficient stock.";
+
+        lowStockList.appendChild(message);
+        return;
+    }
+
+    alertProducts.forEach((product) => {
+        const item = document.createElement("article");
+        const name = document.createElement("h3");
+        const details = document.createElement("p");
+        const statusBadge = document.createElement("span");
+        const statusDot = document.createElement("span");
+
+        const status = getStockStatus(product);
+
+        item.className =
+            "flex flex-col gap-2 rounded-md border p-3 sm:flex-row sm:items-center sm:justify-between";
+
+        name.className = "font-medium text-green-400";
+        name.textContent = product.product_name;
+
+        details.className = "text-sm text-green-400/70";
+        details.textContent =
+            `Supplier: ${getSupplierName(product.supplier_id)} | ` +
+            `Stock: ${product.quantity} | ` +
+            `Reorder level: ${product.reorder_level ?? 5}`;
+
+        statusDot.className = `h-2 w-2 shrink-0 rounded-full ${statusDotClasses[status]}`;
+
+        statusBadge.className = `inline-flex w-max shrink-0 items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold ${statusClasses[status]}`;
+
+        statusBadge.textContent = statusLabels[status];
+        statusBadge.prepend(statusDot);
+
+        item.append(name, details, statusBadge);
+        lowStockList.appendChild(item);
+    });
+}
 
 function getStockStatus(product) {
     const reorderLevel = product.reorder_level ?? 5;
