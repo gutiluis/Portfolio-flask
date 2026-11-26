@@ -444,7 +444,11 @@ function displayInventoryCharts(products) {
         },
     );
 }
-
+function getSupplierName(supplierId) {
+    const suppliers = getSuppliers();
+    const supplier = suppliers.find((supplier) => supplier.id === supplierId);
+    return supplier ? supplier.supplier_name : "Unknown supplier";
+}
 // Read inventory
 function getInventory() {
     return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
@@ -483,6 +487,7 @@ function displayInventory() {
         const values = [
             product.id,
             product.product_name,
+            getSupplierName(product.supplier_id),
             product.quantity,
             `$${Number(product.unit_cost).toFixed(2)}`,
             `$${Number(product.selling_price).toFixed(2)}`,
