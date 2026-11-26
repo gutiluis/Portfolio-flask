@@ -386,7 +386,37 @@ function displayInventoryKPIs(products) {
         inventoryKPIs.append(card);
     });
 }
+// background bar plugin
+const backgroundBar = {
+    id: "backgroundBar",
+    beforeDatasetsDraw(chart) {
+        const {
+            ctx,
+            chartArea: { left, right },
+            scales: { y },
+        } = chart;
 
+        ctx.save();
+        ctx.fillStyle = "rgba(128, 128, 128, 0.25)";
+
+        y.ticks.forEach((tick, index) => {
+            const yPosition = y.getPixelForTick(index);
+            const height = 14;
+
+            ctx.beginPath();
+            ctx.roundRect(
+                left,
+                yPosition - height / 2,
+                right - left,
+                height,
+                height / 2,
+            );
+            ctx.fill();
+        });
+        ctx.restore();
+    },
+};
+Chart.register(backgroundBar);
 let unitCostChart;
 let inventoryValueChart;
 function displayInventoryCharts(products) {
@@ -399,11 +429,6 @@ function displayInventoryCharts(products) {
         indexAxis: "y",
         responsive: true,
         maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false,
-            },
-        },
         scales: {
             x: {
                 beginAtZero: true,
