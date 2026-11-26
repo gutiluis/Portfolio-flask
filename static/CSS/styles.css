@@ -436,6 +436,9 @@
   .gap-y-2 {
     row-gap: calc(var(--spacing) * 2);
   }
+  .overflow-x-auto {
+    overflow-x: auto;
+  }
   .rounded {
     border-radius: 0.25rem;
   }
