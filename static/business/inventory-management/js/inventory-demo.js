@@ -429,6 +429,11 @@ function displayInventoryCharts(products) {
         indexAxis: "y",
         responsive: true,
         maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false,
+            },
+        },
         scales: {
             x: {
                 beginAtZero: true,

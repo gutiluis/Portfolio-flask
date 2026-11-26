@@ -322,6 +322,9 @@
   .h-2 {
     height: calc(var(--spacing) * 2);
   }
+  .h-64 {
+    height: calc(var(--spacing) * 64);
+  }
   .h-80 {
     height: calc(var(--spacing) * 80);
   }
@@ -357,6 +360,9 @@
   }
   .max-w-md {
     max-width: var(--container-md);
+  }
+  .min-w-0 {
+    min-width: 0px;
   }
   .min-w-48 {
     min-width: calc(var(--spacing) * 48);
