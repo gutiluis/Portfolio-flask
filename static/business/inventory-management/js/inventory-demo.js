@@ -386,7 +386,6 @@ function displayInventoryKPIs(products) {
         inventoryKPIs.append(card);
     });
 }
-
 let unitCostChart;
 let inventoryValueChart;
 function displayInventoryCharts(products) {
@@ -408,6 +407,7 @@ function displayInventoryCharts(products) {
             x: {
                 beginAtZero: true,
                 ticks: {
+                    autoSkip: false,
                     color: "#4ade80",
                 },
             },
@@ -427,6 +427,15 @@ function displayInventoryCharts(products) {
             labels,
             datasets: [
                 {
+                    label: "Background",
+                    data: labels.map(() => 0),
+                    backgroundColor: "#1f2937",
+                    borderRadius: 6,
+                    borderSkipped: false,
+                    barThickness: 14,
+                    order: 2,
+                },
+                {
                     label: "Unit Cost ($)",
                     data: unitCosts,
                     backgroundColor: "rgba(34, 197, 94, 0.75)",
@@ -435,10 +444,18 @@ function displayInventoryCharts(products) {
                     borderRadius: 6,
                     borderSkipped: false,
                     barThickness: 14,
+                    order: 1,
                 },
             ],
         },
-        options: chartOptions,
+        options: {
+            ...chartOptions,
+            datasets: {
+                bar: {
+                    grouped: false,
+                },
+            },
+        },
     });
     if (inventoryValueChart) {
         inventoryValueChart.destroy();
