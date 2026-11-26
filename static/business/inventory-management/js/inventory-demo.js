@@ -57,6 +57,7 @@ const initialProducts = [
 ];
 
 // DOM elements
+const reorderLevelInput = document.getElementById("reorder-level");
 const productForm = document.querySelector("#product-form");
 const productIdInput = document.querySelector("#product-id");
 const productNameInput = document.querySelector("#product-name");
@@ -325,6 +326,15 @@ function calculateInventoryKPIs(products) {
 // kpi rendering function with cards in tailwindcss
 function displayInventoryKPIs(products) {
     const kpis = calculateInventoryKPIs(products);
+
+    const lowStockCount = products.filter(
+        (product) => getStockStatus(product) === "low-stock",
+    ).length;
+
+    const outOfStockCount = products.filter(
+        (product) => getStockStatus(product) === "out-of-stock",
+    ).length;
+
     const metrics = [
         {
             label: "Total Products",
@@ -345,6 +355,16 @@ function displayInventoryKPIs(products) {
             label: "Average Unit Cost",
             value: `$${kpis.averageUnitCost.toFixed(2)}`,
         },
+        {
+            label: "Low Stock",
+            value: lowStockCount,
+            color: "text-yellow-400",
+        },
+        {
+            label: "Out of Stock",
+            value: outOfStockCount,
+            color: "text-red-400",
+        },
     ];
     inventoryKPIs.replaceChildren();
     metrics.forEach((metric) => {
@@ -357,7 +377,8 @@ function displayInventoryKPIs(products) {
         heading.className = "mb-2 text-sm text-green-200";
         heading.textContent = metric.label;
 
-        value.className = "text-2xl font-bold text-green-400";
+        value.className = `text-2xl font-bold ${metric.color ?? "text-green-400"}`;
+
         value.textContent = metric.value;
 
         card.append(heading, value);
@@ -469,12 +490,31 @@ function formatDate(date) {
     });
 }
 
+const statusLabels = {
+    "in-stock": "In Stock",
+    "low-stock": "Low Stock",
+    "out-of-stock": "Out of Stock",
+};
+
+const statusClasses = {
+    "in-stock": "border-green-400 text-green-400 bg-green-400/10",
+    "low-stock": "border-yellow-400 text-yellow-400 bg-yellow-400/10",
+    "out-of-stock": "border-red-400 text-red-400 bg-red-400/10",
+};
+
+const statusDotClasses = {
+    "in-stock": "bg-green-400",
+    "low-stock": "bg-yellow-400",
+    "out-of-stock": "bg-red-400",
+};
+
 // Display html table inventory
 function displayInventory() {
     const products = getInventory();
     displayInventoryKPIs(products);
     displayInventoryCharts(products);
     inventoryTableBody.replaceChildren();
+
     const fragment = document.createDocumentFragment();
 
     inventoryCount.textContent = `${products.length} ${products.length === 1 ? "product" : "products"}`;
@@ -484,17 +524,42 @@ function displayInventory() {
     products.forEach((product) => {
         const row = document.createElement("tr");
         const formattedDate = formatDate(product.updated_at);
+
         const values = [
             product.id,
             product.product_name,
             getSupplierName(product.supplier_id),
             product.quantity,
+        ];
+
+        values.forEach((value) => {
+            const cell = document.createElement("td");
+            cell.textContent = value;
+            row.appendChild(cell);
+        });
+
+        const statusCell = document.createElement("td");
+        const statusBadge = document.createElement("span");
+        const status = getStockStatus(product);
+
+        const statusDot = document.createElement("span");
+        statusDot.className = `h-2 w-2 shrink-0 rounded-full ${statusDotClasses[status]}`;
+
+        statusBadge.textContent = statusLabels[status];
+        statusBadge.className = `inline-flex w-max shrink-0 whitespace-nowrap items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold ${statusClasses[status]}`;
+
+        statusBadge.prepend(statusDot);
+
+        statusCell.appendChild(statusBadge);
+        row.appendChild(statusCell);
+
+        const remainingValues = [
             `$${Number(product.unit_cost).toFixed(2)}`,
             `$${Number(product.selling_price).toFixed(2)}`,
             formattedDate,
         ];
 
-        values.forEach((value) => {
+        remainingValues.forEach((value) => {
             const cell = document.createElement("td");
             cell.textContent = value;
             row.appendChild(cell);
@@ -548,6 +613,7 @@ productForm.addEventListener("submit", (event) => {
         product_name: productNameInput.value.trim(),
         supplier_id: Number(productSupplierSelect.value),
         quantity: Number(quantityInput.value),
+        reorder_level: Number(reorderLevelInput.value),
         unit_cost: Number(unitCostInput.value),
         selling_price: Number(sellingPriceInput.value),
         updated_at: new Date().toISOString(),
@@ -566,6 +632,19 @@ productForm.addEventListener("submit", (event) => {
     resetForm();
 });
 
+function getStockStatus(product) {
+    const reorderLevel = product.reorder_level ?? 5;
+
+    if (product.quantity === 0) {
+        return "out-of-stock";
+    }
+
+    if (product.quantity <= reorderLevel) {
+        return "low-stock";
+    }
+    return "in-stock";
+}
+
 // Edit product
 function editProduct(id) {
     const products = getInventory();
@@ -575,13 +654,15 @@ function editProduct(id) {
     if (!product) {
         return;
     }
-    // value is a property
+    // value is a property of the Object
     productIdInput.value = product.id;
     productNameInput.value = product.product_name;
-    supplierIdInput.value = product.supplier_id;
+    productSupplierSelect.value = product.supplier_id;
     quantityInput.value = product.quantity;
+    reorderLevelInput.value = product.reorder_level ?? 5;
     unitCostInput.value = product.unit_cost;
     sellingPriceInput.value = product.selling_price;
+
     updatedAtContainer.hidden = false;
     updatedAt.textContent = formatDate(product.updated_at);
 
