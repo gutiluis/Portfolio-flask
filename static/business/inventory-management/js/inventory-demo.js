@@ -31,7 +31,7 @@ const initialProducts = [
         id: 1,
         product_name: "Wireless Keyboard",
         supplier_id: 1,
-        quantity: 15,
+        quantity: 5,
         unit_cost: 29.99,
         selling_price: 40,
         updated_at: "2026-11-01T10:00:00",
@@ -82,7 +82,7 @@ const supplierStatusInput = document.getElementById("supplier-status");
 const addSupplierButton = document.getElementById("add-supplier-button");
 const cancelSupplierButton = document.getElementById("cancel-supplier-button");
 const submitButton = document.querySelector("#submit-button");
-const cancelButton = document.querySelector("#cancel-button");
+const cancelButton = document.getElementById("cancel-button");
 const resetButton = document.querySelector("#reset-button");
 const resetSuppliersButton = document.querySelector("#reset-suppliers");
 const supplierTableBody = document.getElementById("supplier-table-body");
@@ -386,6 +386,7 @@ function displayInventoryKPIs(products) {
         inventoryKPIs.append(card);
     });
 }
+
 let unitCostChart;
 let inventoryValueChart;
 function displayInventoryCharts(products) {
@@ -427,15 +428,6 @@ function displayInventoryCharts(products) {
             labels,
             datasets: [
                 {
-                    label: "Background",
-                    data: labels.map(() => 0),
-                    backgroundColor: "#1f2937",
-                    borderRadius: 6,
-                    borderSkipped: false,
-                    barThickness: 14,
-                    order: 2,
-                },
-                {
                     label: "Unit Cost ($)",
                     data: unitCosts,
                     backgroundColor: "rgba(34, 197, 94, 0.75)",
@@ -444,18 +436,10 @@ function displayInventoryCharts(products) {
                     borderRadius: 6,
                     borderSkipped: false,
                     barThickness: 14,
-                    order: 1,
                 },
             ],
         },
-        options: {
-            ...chartOptions,
-            datasets: {
-                bar: {
-                    grouped: false,
-                },
-            },
-        },
+        options: chartOptions,
     });
     if (inventoryValueChart) {
         inventoryValueChart.destroy();
@@ -790,7 +774,7 @@ function resetForm() {
     updatedAt.textContent = "";
 
     submitButton.textContent = "Add Product";
-    cancelButton.hidden = true;
+    cancelButton.hidden = false;
 }
 
 // Cancel editing
