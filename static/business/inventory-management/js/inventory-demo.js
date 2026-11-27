@@ -251,8 +251,13 @@ function displaySuppliers(suppliers = getSuppliers()) {
             supplier.status,
         ];
 
-        values.forEach((value) => {
+        values.forEach((value, index) => {
             const cell = document.createElement("td");
+
+            cell.className = [1, 2, 3, 4].includes(index)
+                ? "whitespace-normal break-words"
+                : "whitespace-nowrap";
+
             cell.textContent = value;
             row.appendChild(cell);
         });
@@ -565,13 +570,23 @@ function displayInventory() {
             product.quantity,
         ];
 
-        values.forEach((value) => {
+        values.forEach((value, index) => {
             const cell = document.createElement("td");
+
+            const cellClasses = [
+                "text-center whitespace-nowrap",
+                "text-left whitespace-normal break-words",
+                "text-left whitespace-normal break-words",
+                "text-right whitespace-nowrap tabular-nums",
+            ];
+            cell.className = cellClasses[index];
             cell.textContent = value;
             row.appendChild(cell);
         });
 
         const statusCell = document.createElement("td");
+        statusCell.className = "text-center whitespace-nowrap";
+
         const statusBadge = document.createElement("span");
         const status = getStockStatus(product);
 
@@ -579,7 +594,7 @@ function displayInventory() {
         statusDot.className = `h-2 w-2 shrink-0 rounded-full ${statusDotClasses[status]}`;
 
         statusBadge.textContent = statusLabels[status];
-        statusBadge.className = `inline-flex w-max shrink-0 whitespace-nowrap items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold ${statusClasses[status]}`;
+        statusBadge.className = `inline-flex items-center gap-2 whitespace-nowrap rounded-full border px-3 py-1 text-xs font-semibold ${statusClasses[status]}`;
 
         statusBadge.prepend(statusDot);
 
@@ -592,13 +607,18 @@ function displayInventory() {
             formattedDate,
         ];
 
-        remainingValues.forEach((value) => {
+        remainingValues.forEach((value, index) => {
             const cell = document.createElement("td");
+            cell.className =
+                index === 2
+                    ? "text-center whitespace-nowrap"
+                    : "text-right whitespace-nowrap tabular-nums";
             cell.textContent = value;
             row.appendChild(cell);
         });
 
         const actionsCell = document.createElement("td");
+        actionsCell.className = "text-center whitespace-nowrap";
 
         const editButton = document.createElement("button");
         editButton.type = "button";
