@@ -69,14 +69,22 @@
             </section>
 
             <section aria-labelledby="inventory-heading">
-                <header>
+                <header
+                    class="flex flex-wrap items-center justify-between gap-4"
+                >
                     <h2 id="inventory-heading">
                         Inventory Records - <span class="current-year"></span>
                     </h2>
 
-                    <button type="button" id="reset-button">
-                        Reset Demo Inventory
-                    </button>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" id="export-button">
+                            Export CSV
+                        </button>
+
+                        <button type="button" id="reset-button">
+                            Reset Demo Inventory
+                        </button>
+                    </div>
                 </header>
 
                 <p id="inventory-count" aria-live="polite">0 products</p>

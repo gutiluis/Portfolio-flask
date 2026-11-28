@@ -92,11 +92,61 @@ const supplierCount = document.querySelector("#supplier-count");
 const productSupplierSelect = document.getElementById("product-supplier");
 const emptyMessage = document.querySelector("#empty-message");
 const supplierEmptyMessage = document.querySelector("#supplier-empty-message");
+const exportButton = document.querySelector("#export-button");
 // current year display
 document.querySelectorAll(".current-year").forEach((element) => {
     element.textContent = new Date().getFullYear();
 });
+function exportInventoryCSV() {
+    const products = getInventory();
 
+    const headers = [
+        "ID",
+        "Product",
+        "Supplier",
+        "Quantity",
+        "Reorder Level",
+        "Unit Cost",
+        "Selling Price",
+        "Last Updated",
+    ];
+    const escapeCSV = (value) => {
+        const text = String(value ?? "");
+        return `"${text.replaceAll('"', '""')}"`;
+    };
+
+    const rows = products.map((product) => [
+        product.id,
+        product.product_name,
+        getSupplierName(product.supplier_id),
+        product.quantity,
+        product.reorder_level ?? 5,
+        product.unit_cost,
+        product.selling_price,
+        formatDate(product.updated_at),
+    ]);
+
+    const csv = [
+        headers.map(escapeCSV).join(","),
+        ...rows.map((row) => row.map(escapeCSV).join(",")),
+    ].join("\r\n");
+
+    const blob = new Blob(["\uFEFF", csv], {
+        type: "text/csv;charset=utf-8;",
+    });
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "products.csv";
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    URL.revokeObjectURL(url);
+}
 // supplier product relationship
 function displaySupplierOptions() {
     const suppliers = getSuppliers();
@@ -518,12 +568,15 @@ function saveInventory(products) {
 }
 
 function formatDate(date) {
-    return new Date(date).toLocaleString("en-US", {
+    const value = new Date(date);
+    if (Number.isNaN(value.getTime())) return "";
+    return value.toLocaleString("en-US", {
         year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
+        month: "numeric",
+        day: "numeric",
         hour: "numeric",
         minute: "2-digit",
+        hour12: true,
     });
 }
 
@@ -829,6 +882,8 @@ function resetForm() {
 
 // Cancel editing
 cancelButton.addEventListener("click", resetForm);
+// export csv
+exportButton.addEventListener("click", exportInventoryCSV);
 
 // Reset demo inventory
 resetButton.addEventListener("click", () => {
